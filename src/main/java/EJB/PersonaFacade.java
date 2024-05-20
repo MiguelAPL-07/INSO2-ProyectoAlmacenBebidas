@@ -12,7 +12,7 @@ import modelo.Persona;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Stateless
 public class PersonaFacade extends AbstractFacade<Persona> implements PersonaFacadeLocal {

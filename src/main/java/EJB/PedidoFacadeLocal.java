@@ -11,7 +11,7 @@ import modelo.Pedido;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Local
 public interface PedidoFacadeLocal {

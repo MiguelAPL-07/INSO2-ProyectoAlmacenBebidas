@@ -11,7 +11,7 @@ import modelo.Menu;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Local
 public interface MenuFacadeLocal {

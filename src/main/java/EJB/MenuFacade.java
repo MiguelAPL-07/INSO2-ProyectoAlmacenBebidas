@@ -12,7 +12,7 @@ import modelo.Menu;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Stateless
 public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal {

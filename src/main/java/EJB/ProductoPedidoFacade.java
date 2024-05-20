@@ -12,7 +12,7 @@ import modelo.ProductoPedido;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Stateless
 public class ProductoPedidoFacade extends AbstractFacade<ProductoPedido> implements ProductoPedidoFacadeLocal {

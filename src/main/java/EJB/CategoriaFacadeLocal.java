@@ -11,7 +11,7 @@ import modelo.Categoria;
 
 /**
  *
- * @author PC
+ * @author Miguel Ángel
  */
 @Local
 public interface CategoriaFacadeLocal {
