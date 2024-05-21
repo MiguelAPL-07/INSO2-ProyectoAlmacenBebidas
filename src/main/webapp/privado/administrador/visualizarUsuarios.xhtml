@@ -50,13 +50,13 @@
                             <h:outputText value="#{user.persona.correoElectronico}" />
                         </p:column>
 
-                        <p:column headerText="Modificar Usuario">
+                        <p:column headerText="Modificar usuario">
                             <p:commandLink value="Modificar" 
                                            action="editarUsuario.xhtml"
                                            actionListener="#{listarUsuariosController.establecerUsuario(user)}"/>
                         </p:column>
                         
-                        <p:column headerText="Eliminar Usuario">
+                        <p:column headerText="Eliminar usuario">
                              <p:commandLink value="Eliminar" 
                                             actionListener="#{listarUsuariosController.eliminarUsuario(user)}" />
                         </p:column>
