@@ -33,6 +33,9 @@ public class ListarUsuariosController {
     
     // Almacena todos los clientes de la aplicacion
     private List<Usuario> clientesBD;
+    
+    // Almacena todos los empleados de la aplicacion
+    private List<Usuario> empleadosBD;
 
     private Usuario usuario;
     
@@ -41,6 +44,8 @@ public class ListarUsuariosController {
         usuariosBD = usuarioEJB.findAll();
         
         clientesBD = usuarioEJB.obtenerUsuariosRol(1);
+        
+        empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
     }
     
     public void establecerUsuario(Usuario usuario) {
@@ -62,6 +67,17 @@ public class ListarUsuariosController {
         try {
             usuarioEJB.remove(usuario);
             clientesBD = usuarioEJB.obtenerUsuariosRol(1);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
+        } catch(Exception e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
+            System.out.println("Error al eliminar el usuario " + e.getMessage());
+        }
+    }
+    
+    public void eliminarEmpleado(Usuario usuario) {
+        try {
+            usuarioEJB.remove(usuario);
+            empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
         } catch(Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
@@ -92,6 +108,14 @@ public class ListarUsuariosController {
     public void setClientesBD(List<Usuario> clientesBD) {
         this.clientesBD = clientesBD;
     }
+
+    public List<Usuario> getEmpleadosBD() {
+        return empleadosBD;
+    }
+
+    public void setEmpleadosBD(List<Usuario> empleadosBD) {
+        this.empleadosBD = empleadosBD;
+    }
     
     public Usuario getUsuario() {
         return usuario;
@@ -103,11 +127,12 @@ public class ListarUsuariosController {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.usuarioEJB);
-        hash = 67 * hash + Objects.hashCode(this.usuariosBD);
-        hash = 67 * hash + Objects.hashCode(this.clientesBD);
-        hash = 67 * hash + Objects.hashCode(this.usuario);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.usuarioEJB);
+        hash = 79 * hash + Objects.hashCode(this.usuariosBD);
+        hash = 79 * hash + Objects.hashCode(this.clientesBD);
+        hash = 79 * hash + Objects.hashCode(this.empleadosBD);
+        hash = 79 * hash + Objects.hashCode(this.usuario);
         return hash;
     }
 
@@ -130,6 +155,9 @@ public class ListarUsuariosController {
             return false;
         }
         if (!Objects.equals(this.clientesBD, other.clientesBD)) {
+            return false;
+        }
+        if (!Objects.equals(this.empleadosBD, other.empleadosBD)) {
             return false;
         }
         if (!Objects.equals(this.usuario, other.usuario)) {
