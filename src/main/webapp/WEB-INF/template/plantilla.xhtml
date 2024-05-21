@@ -24,7 +24,7 @@
                 <p:menubar model="#{menuController.modelo}">
                     <f:facet name="options">
                         <h:form>
-                            <p:commandButton value="Cambiar datos personales" />
+                            <p:commandButton value="Cerrar sesion" actionListener="#{menuController.destrurirSesionActual()}" />
                         </h:form>
                     </f:facet>
                 </p:menubar>

@@ -6,6 +6,7 @@
 package controller;
 
 import EJB.MenuFacadeLocal;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -79,6 +80,16 @@ public class MenuController implements Serializable {
             }
         }
         return modeloUsuario;
+    }
+    
+    public void destrurirSesionActual() {
+        try {
+            // Se destruye la sesion del usuario
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath() + "/faces/index.xhtml");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public MenuFacadeLocal getMenuEJB() {
