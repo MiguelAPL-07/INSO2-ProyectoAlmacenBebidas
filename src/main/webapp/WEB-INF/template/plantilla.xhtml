@@ -20,7 +20,15 @@
     <h:body>
 
         <div id="top">
-            <ui:insert name="top">Top</ui:insert>
+            <ui:insert name="top">
+                <p:menubar model="#{menuController.modelo}">
+                    <f:facet name="options">
+                        <h:form>
+                            <p:commandButton value="Cambiar datos personales" />
+                        </h:form>
+                    </f:facet>
+                </p:menubar>
+            </ui:insert>
         </div>
 
         <div id="content" class="center_content">
