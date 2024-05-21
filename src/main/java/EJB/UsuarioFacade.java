@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -56,5 +57,27 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             System.out.println(e.toString());
         }
         return r;
+    }
+    
+    @Override
+    public List<Usuario> obtenerUsuariosRol(int idRol) {
+        List<Usuario> usuarios = new ArrayList<>();
+         try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM Usuario u WHERE u.rol.idRol=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", idRol);
+
+            // Ejecutar consulta
+            usuarios = query.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return usuarios;
     }
 }

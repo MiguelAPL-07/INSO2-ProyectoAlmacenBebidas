@@ -30,12 +30,17 @@ public class ListarUsuariosController {
     
     // Almacena todos los usuarios de la aplicacion
     private List<Usuario> usuariosBD;
+    
+    // Almacena todos los clientes de la aplicacion
+    private List<Usuario> clientesBD;
 
     private Usuario usuario;
     
     @PostConstruct
     public void init() {
         usuariosBD = usuarioEJB.findAll();
+        
+        clientesBD = usuarioEJB.obtenerUsuariosRol(1);
     }
     
     public void establecerUsuario(Usuario usuario) {
@@ -49,7 +54,18 @@ public class ListarUsuariosController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
         } catch(Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
-            System.out.println("Error al eliminar el usuario "+e.getMessage());
+            System.out.println("Error al eliminar el usuario " + e.getMessage());
+        }
+    }
+    
+    public void eliminarCliente(Usuario usuario) {
+        try {
+            usuarioEJB.remove(usuario);
+            clientesBD = usuarioEJB.obtenerUsuariosRol(1);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
+        } catch(Exception e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
+            System.out.println("Error al eliminar el usuario " + e.getMessage());
         }
     }
 
@@ -69,6 +85,14 @@ public class ListarUsuariosController {
         this.usuariosBD = usuariosBD;
     }
 
+    public List<Usuario> getClientesBD() {
+        return clientesBD;
+    }
+
+    public void setClientesBD(List<Usuario> clientesBD) {
+        this.clientesBD = clientesBD;
+    }
+    
     public Usuario getUsuario() {
         return usuario;
     }
@@ -80,9 +104,10 @@ public class ListarUsuariosController {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.usuarioEJB);
-        hash = 79 * hash + Objects.hashCode(this.usuariosBD);
-        hash = 79 * hash + Objects.hashCode(this.usuario);
+        hash = 67 * hash + Objects.hashCode(this.usuarioEJB);
+        hash = 67 * hash + Objects.hashCode(this.usuariosBD);
+        hash = 67 * hash + Objects.hashCode(this.clientesBD);
+        hash = 67 * hash + Objects.hashCode(this.usuario);
         return hash;
     }
 
@@ -102,6 +127,9 @@ public class ListarUsuariosController {
             return false;
         }
         if (!Objects.equals(this.usuariosBD, other.usuariosBD)) {
+            return false;
+        }
+        if (!Objects.equals(this.clientesBD, other.clientesBD)) {
             return false;
         }
         if (!Objects.equals(this.usuario, other.usuario)) {

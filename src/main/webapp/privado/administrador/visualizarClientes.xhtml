@@ -13,9 +13,9 @@
                 
                 <h:form id="formPrincipal">
                     
-                    <h1>LISTADO DE TODOS LOS USUARIOS DE LA APLICACIÓN</h1>
+                    <h1>LISTADO DE TODOS LOS CLIENTES DE LA APLICACIÓN</h1>
                     
-                    <p:dataTable id="tablaUsuarios" var="user" value="#{listarUsuariosController.usuariosBD}"
+                    <p:dataTable id="tablaUsuarios" var="user" value="#{listarUsuariosController.clientesBD}"
                                  rows="10"
                                  paginator="true" paginatorPosition="both"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -58,7 +58,7 @@
                         
                         <p:column headerText="Eliminar Usuario">
                              <p:commandLink value="Eliminar" 
-                                            actionListener="#{listarUsuariosController.eliminarUsuario(user)}" />
+                                            actionListener="#{listarUsuariosController.eliminarCliente(user)}" />
                         </p:column>
 
                     </p:dataTable>
