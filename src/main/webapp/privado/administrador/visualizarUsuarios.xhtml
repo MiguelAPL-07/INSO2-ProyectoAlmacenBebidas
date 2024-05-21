@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                
+                
+                <h:form id="formPrincipal">
+                    
+                    <h1>LISTADO DE TODOS LOS USUARIOS DE LA APLICACIÓN</h1>
+                    
+                    <p:dataTable id="tablaUsuarios" var="user" value="#{listarUsuariosController.usuariosBD}"
+                                 rows="10"
+                                 paginator="true" paginatorPosition="both"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} usuarios"
+                                 rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
+                     
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{user.usuario}" />
+                        </p:column>
+                        
+                        <p:column headerText="Tipo de rol">
+                            <h:outputText value="#{user.rol.descripcion}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre completo">
+                            <h:outputText value="#{user.persona.nombre} #{user.persona.apellido1} #{user.persona.apellido2}" />
+                        </p:column>
+
+                        <p:column headerText="Última conexión">
+                            <h:outputText value="#{user.ultimaConexion}" />
+                        </p:column>
+                        
+                        <p:column headerText="DNI">
+                            <h:outputText value="#{user.persona.dni}" />
+                        </p:column>
+                        
+                        <p:column headerText="Teléfono">
+                            <h:outputText value="#{user.persona.telefono}" />
+                        </p:column>
+                        
+                        <p:column headerText="Correo electrónico">
+                            <h:outputText value="#{user.persona.correoElectronico}" />
+                        </p:column>
+
+                        <p:column headerText="Modificar Usuario">
+                            <p:commandLink value="Modificar" 
+                                           action="editarUsuario.xhtml"
+                                           actionListener="#{listarUsuariosController.establecerUsuario(user)}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Eliminar Usuario">
+                             <p:commandLink value="Eliminar" 
+                                            actionListener="#{listarUsuariosController.eliminarUsuario(user)}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
