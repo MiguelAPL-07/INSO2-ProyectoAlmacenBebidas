@@ -13,6 +13,8 @@
         <h:outputStylesheet library="css" name="cssLayout.css" />
         
         <title>Facelets Template</title>
+        
+        <f:event type="preRenderView" listener="#{plantillaController.verificarYMostrar()}"/>
     </h:head>
 
     <h:body>
