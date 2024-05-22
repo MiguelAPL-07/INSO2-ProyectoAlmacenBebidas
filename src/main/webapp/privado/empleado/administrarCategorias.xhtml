@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                
+                
+                <h:form id="formPrincipal">
+                    
+                    <h1>GESTIÓN DE LAS CATEGORIAS</h1>
+                    
+                    <p:dataTable id="tablaCategorias" var="categoria" value="#{administrarCategoriasController.listaCategoriasBD}"
+                                 rows="10"
+                                 paginator="true" paginatorPosition="both"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} categorias"
+                                 rowsPerPageTemplate="5,10,{ShowAll|'Todas'}">
+                     
+                        <p:column headerText="Identificador">
+                            <h:outputText value="#{categoria.idCategoria}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre de la categoria">
+                            <h:outputText value="#{categoria.nombreCategoria}" />
+                        </p:column>
+
+                        <p:column headerText="Modificar Categoria">
+                            <p:commandLink value="Modificar" 
+                                           update=":formDialogo:dialogo"
+                                           oncomplete="PF('wdialogo').show();"
+                                           actionListener="#{administrarCategoriasController.establecerCategoriaModificar(categoria)}" />
+                        </p:column>
+                        
+                        <p:column headerText="Eliminar Categoria">
+                             <p:commandLink value="Eliminar" 
+                                           update=":formDialogo:dialogo"
+                                           oncomplete="PF('wdialogo').show();"
+                                           actionListener="#{administrarCategoriasController.establecerCategoriaEliminar(categoria)}" />
+                        </p:column>
+
+                    </p:dataTable>
+                    
+                    <p:commandButton value="Nuevo" oncomplete="PF('wdialogo').show();"
+                                     actionListener="#{administrarCategoriasController.establecerCategoriaInsertar()}"
+                                     update=":formDialogo:dialogo">
+                        <i class="pi pi-plus-circle" style="font-size: 3em" />
+                    </p:commandButton>
+                    
+                </h:form>
+                        
+                <h:form id="formDialogo">
+                    
+                    <p:dialog id="dialogo" widgetVar="wdialogo" modal="true"
+                              closeOnEscape="true" draggable="false"
+                              resizable="false" header="Categorias de la aplicacion">
+                        
+                        <p:panelGrid columns="2">
+                            
+                            <p:outputLabel value="Nombre de la categoria" />
+                            <p:inputText value="#{administrarCategoriasController.categoria.nombreCategoria}"
+                                         rendered="#{administrarCategoriasController.accion == 'I' || administrarCategoriasController.accion == 'M'}"/>
+                            <p:outputLabel value="#{administrarCategoriasController.categoria.nombreCategoria}" 
+                                           rendered="#{administrarCategoriasController.accion == 'E'}" />
+                            
+                            <p:commandButton value="Insertar" actionListener="#{administrarCategoriasController.insertarCategoria()}"
+                                             update=":formPrincipal:tablaCategorias" oncomplete="PF('wdialogo').hide();"
+                                             rendered="#{administrarCategoriasController.accion == 'I'}" />
+                            
+                            <p:commandButton value="Modificar" actionListener="#{administrarCategoriasController.modificarCategoria()}" 
+                                             update=":formPrincipal:tablaCategorias" oncomplete="PF('wdialogo').hide();" 
+                                             rendered="#{administrarCategoriasController.accion=='M'}"/>
+                            
+                            <p:commandButton value="Eliminar" actionListener="#{administrarCategoriasController.eliminarCategoria()}" 
+                                             update=":formPrincipal:tablaCategorias" oncomplete="PF('wdialogo').hide();" 
+                                             rendered="#{administrarCategoriasController.accion=='E'}"/>
+                            
+                            <p:commandButton value="Cancelar" onclick="PF('wdialogo1').hide();" />
+                            
+                        </p:panelGrid>          
+                        
+                    </p:dialog>
+
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -78,6 +78,7 @@ public class ListarProductosController implements Serializable {
         producto.setCantidad(producto.getCantidad() + cantidad);
         try {
             productoEJB.edit(producto);
+            filtrarProductosPorCategoria();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
