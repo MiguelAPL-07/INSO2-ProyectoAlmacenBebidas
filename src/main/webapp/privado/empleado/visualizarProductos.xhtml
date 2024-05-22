@@ -56,6 +56,18 @@
                         <p:column headerText="Categoria">
                            <h:outputText value="#{prod.categoria.nombreCategoria}" />
                         </p:column>
+                        
+                        <p:column headerText="Modificar producto">
+                            <h:commandLink value="Modificar"
+                                           action="editarProducto.xhtml"
+                                           actionListener="#{listarProductosController.establecerProducto(prod)}">
+                                <h:graphicImage library="img" name="editar.png" width="30px" />
+                            </h:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="Eliminiar publicaciones">
+                            <p:commandLink value="Eliminar" actionListener="#{listarProductosController.eliminarProducto(prod)}" />
+                        </p:column>
 
                     </p:dataTable>
                    

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import modelo.Categoria;
@@ -36,6 +38,8 @@ public class ListarProductosController implements Serializable {
     private List<Producto> productosBD;
     
     private List<String> nombreCategoriasBD;
+    
+    private Producto producto;
     
     private String categoriaSeleccionada;
     
@@ -61,6 +65,21 @@ public class ListarProductosController implements Serializable {
             productosBD = productoEJB.findAll();
         } else {
             productosBD = productoEJB.obtenerProductoPorCategoria(categoriaSeleccionada);
+        }
+    } 
+    
+    public void establecerProducto(Producto producto) {
+        this.producto = producto;
+    }
+    
+    public void eliminarProducto(Producto producto) {
+         try {
+            productoEJB.remove(producto);
+            filtrarProductosPorCategoria();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Producto eliminado con éxito"));
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el producto"));
+            System.out.println("Error al eliminar la publicación "+e.getMessage());
         }
     }
 
