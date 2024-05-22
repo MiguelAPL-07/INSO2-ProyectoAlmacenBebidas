@@ -43,6 +43,8 @@ public class ListarProductosController implements Serializable {
     
     private String categoriaSeleccionada;
     
+    private int cantidad;
+    
     @PostConstruct
     public void init() {
         productosBD = productoEJB.findAll();
@@ -56,7 +58,7 @@ public class ListarProductosController implements Serializable {
         for(Categoria cActual : categoriasBD) {
             nombreCategoriasBD.add(cActual.getNombreCategoria());
         }
-        
+        cantidad = 0;
         categoriaSeleccionada = "Todas";
     }
     
@@ -72,8 +74,19 @@ public class ListarProductosController implements Serializable {
         this.producto = producto;
     }
     
+    public void agregarStock() {
+        producto.setCantidad(producto.getCantidad() + cantidad);
+        try {
+            productoEJB.edit(producto);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            System.out.println("Error al insertar el usuario " + e.getMessage());
+        }
+    }
+    
     public void eliminarProducto(Producto producto) {
-         try {
+        try {
             productoEJB.remove(producto);
             filtrarProductosPorCategoria();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Producto eliminado con éxito"));
@@ -83,6 +96,14 @@ public class ListarProductosController implements Serializable {
         }
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     public ProductoFacadeLocal getProductoEJB() {
         return productoEJB;
     }
