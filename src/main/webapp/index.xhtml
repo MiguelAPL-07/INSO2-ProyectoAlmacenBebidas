@@ -7,7 +7,7 @@
         <title>Facelet Title</title>
         <h:outputStylesheet library="css" name="index.css" />
     </h:head>
-    <h:body>
+    <h:body id="principal">
         
         <h:form id="loginForm">
             
@@ -15,9 +15,9 @@
                 
                 <h1>Inicio de sesión</h1>
                 
-                <p:panelGrid columns="2" style="display:block; text-align:center">
+                <p:panelGrid columns="2" style="display:block; text-align:center"> 
                     <p:fieldset legend="Credenciales">
-                         <p:outputLabel value="Usuario" for="user" />
+                        <p:outputLabel value="Usuario" for="user" />
                         <p:inputText value="#{indexController.usuario.usuario}" 
                                     id="user" required="true" requiredMessage="Introduce una contrasena" />
                         <p:message for="user" />
