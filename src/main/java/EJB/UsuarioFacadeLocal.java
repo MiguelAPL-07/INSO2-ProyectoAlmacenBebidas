@@ -31,4 +31,6 @@ public interface UsuarioFacadeLocal {
     int count();
     
     Usuario verificarUsuario(Usuario usuario);
+    
+    List<Usuario> obtenerUsuariosRol(int idRol);
 }

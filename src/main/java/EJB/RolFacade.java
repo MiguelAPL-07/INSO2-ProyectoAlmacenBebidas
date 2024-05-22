@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,4 +30,15 @@ public class RolFacade extends AbstractFacade<Rol> implements RolFacadeLocal {
         super(Rol.class);
     }
     
+    @Override
+    public Rol findByDescripcion(String descripcion) {
+        Rol rol = new Rol();
+        List<Rol> roles = findAll();
+        for(Rol rActual : roles) {
+            if(rActual.getDescripcion().equals(descripcion)) {
+                rol = rActual;
+            }
+        }
+        return rol;
+    }
 }
