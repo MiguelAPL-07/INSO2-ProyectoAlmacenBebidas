@@ -30,4 +30,6 @@ public interface CategoriaFacadeLocal {
 
     int count();
     
+    Categoria obtenerCategoriaPorNombre(String nombre);
+    
 }
