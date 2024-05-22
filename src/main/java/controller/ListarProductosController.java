@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import modelo.Categoria;
 import modelo.Producto;
@@ -26,7 +26,7 @@ import modelo.Producto;
  */
 
 @Named
-@ViewScoped
+@RequestScoped
 public class ListarProductosController implements Serializable {
     
     @EJB
@@ -115,6 +115,14 @@ public class ListarProductosController implements Serializable {
         this.nombreCategoriasBD = nombreCategoriasBD;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     public String getCategoriaSeleccionada() {
         return categoriaSeleccionada;
     }
@@ -126,11 +134,12 @@ public class ListarProductosController implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.productoEJB);
-        hash = 17 * hash + Objects.hashCode(this.categoriaEJB);
-        hash = 17 * hash + Objects.hashCode(this.productosBD);
-        hash = 17 * hash + Objects.hashCode(this.nombreCategoriasBD);
-        hash = 17 * hash + Objects.hashCode(this.categoriaSeleccionada);
+        hash = 71 * hash + Objects.hashCode(this.productoEJB);
+        hash = 71 * hash + Objects.hashCode(this.categoriaEJB);
+        hash = 71 * hash + Objects.hashCode(this.productosBD);
+        hash = 71 * hash + Objects.hashCode(this.nombreCategoriasBD);
+        hash = 71 * hash + Objects.hashCode(this.producto);
+        hash = 71 * hash + Objects.hashCode(this.categoriaSeleccionada);
         return hash;
     }
 
@@ -161,13 +170,10 @@ public class ListarProductosController implements Serializable {
         if (!Objects.equals(this.nombreCategoriasBD, other.nombreCategoriasBD)) {
             return false;
         }
+        if (!Objects.equals(this.producto, other.producto)) {
+            return false;
+        }
         return true;
     }
 
-    
-    
-
-    
-    
-    
 }
