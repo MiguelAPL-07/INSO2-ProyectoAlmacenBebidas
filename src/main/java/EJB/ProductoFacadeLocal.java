@@ -32,4 +32,6 @@ public interface ProductoFacadeLocal {
     
     List<Producto> obtenerProductoPorCategoria(String nombreCategoria);
     
+    Producto obtenerProductoPorNombre(String nombre);
+    
 }

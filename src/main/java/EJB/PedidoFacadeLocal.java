@@ -5,9 +5,11 @@
  */
 package EJB;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Pedido;
+import modelo.Persona;
 
 /**
  *
@@ -30,4 +32,5 @@ public interface PedidoFacadeLocal {
 
     int count();
     
+    Pedido obtenerPedidoPorFechaCreacionYUsuario(Date fechaCreacion, Persona persona);
 }
