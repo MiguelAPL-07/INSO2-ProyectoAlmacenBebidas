@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form>
+                    
+                   <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
+                   
+                   <p:outputLabel value="Filtrar los productos por categoria de producto" for="categoria" />
+                   <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
+                                    onchange="#{listarProductosController.filtrarProductosPorCategoria()}"
+                                    >
+                       <f:ajax event="change" render="tablaProductos" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
+                       <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
+                    </p:selectOneMenu>
+                    <p:message for="categoria" />
+                   
+                   
+                    <p:dataTable id="tablaProductos" var="prod" value="#{listarProductosController.productosBD}"
+                                 rows="10"
+                                 paginator="true" paginatorPosition="both"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} productos"
+                                 rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{prod.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Descripción">
+                            <h:outputText value="#{prod.descripcion}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{prod.precio}"/>
+                        </p:column>
+                        
+                        <p:column headerText="IVA en % aplicable">
+                            <h:outputText value="#{prod.iva}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{prod.cantidad}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Categoria">
+                           <h:outputText value="#{prod.categoria.nombreCategoria}" />
+                        </p:column>
+                        
+                        <p:column headerText="Modificar producto">
+                            <h:commandLink value="Modificar"
+                                           action="editarProducto.xhtml"
+                                           actionListener="#{listarProductosController.establecerProducto(prod)}">
+                            </h:commandLink>
+                        </p:column>
+                        
+                        <p:column headerText="Eliminiar publicaciones">
+                            <p:commandLink value="Eliminar" actionListener="#{listarProductosController.eliminarProducto(prod)}" />
+                        </p:column>
+
+                    </p:dataTable>
+                   
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

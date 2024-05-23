@@ -41,6 +41,9 @@ public class Producto implements Serializable {
     @Column(name="iva")
     private double iva;
     
+    @Column(name="cantidad")
+    private int cantidad;
+    
     @JoinColumn(name="idCategoria")
     @ManyToOne
     private Categoria categoria;
@@ -85,6 +88,14 @@ public class Producto implements Serializable {
         this.iva = iva;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -95,13 +106,14 @@ public class Producto implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + this.idProducto;
-        hash = 41 * hash + Objects.hashCode(this.nombre);
-        hash = 41 * hash + Objects.hashCode(this.descripcion);
-        hash = 41 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
-        hash = 41 * hash + (int) (Double.doubleToLongBits(this.iva) ^ (Double.doubleToLongBits(this.iva) >>> 32));
-        hash = 41 * hash + Objects.hashCode(this.categoria);
+        int hash = 3;
+        hash = 37 * hash + this.idProducto;
+        hash = 37 * hash + Objects.hashCode(this.nombre);
+        hash = 37 * hash + Objects.hashCode(this.descripcion);
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.iva) ^ (Double.doubleToLongBits(this.iva) >>> 32));
+        hash = 37 * hash + this.cantidad;
+        hash = 37 * hash + Objects.hashCode(this.categoria);
         return hash;
     }
 
@@ -126,6 +138,9 @@ public class Producto implements Serializable {
         if (Double.doubleToLongBits(this.iva) != Double.doubleToLongBits(other.iva)) {
             return false;
         }
+        if (this.cantidad != other.cantidad) {
+            return false;
+        }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
@@ -137,6 +152,6 @@ public class Producto implements Serializable {
         }
         return true;
     }
-    
+
     
 }

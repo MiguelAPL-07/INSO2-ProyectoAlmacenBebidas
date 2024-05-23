@@ -5,9 +5,11 @@
  */
 package EJB;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.EstadoPedido;
 
 /**
@@ -29,4 +31,29 @@ public class EstadoPedidoFacade extends AbstractFacade<EstadoPedido> implements 
         super(EstadoPedido.class);
     }
     
+    @Override
+    public EstadoPedido obtenerEstadoPedidoPorDescripcion(String descripcion) {
+        EstadoPedido ep = null;
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM EstadoPedido e WHERE e.descripcion=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", descripcion);
+
+            // Ejecutar consulta
+            List<EstadoPedido> resultado = query.getResultList();
+
+            
+            if(resultado.size() > 0) {
+                ep = resultado.get(0);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return ep;
+    }
 }

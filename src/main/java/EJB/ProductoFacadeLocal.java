@@ -30,4 +30,8 @@ public interface ProductoFacadeLocal {
 
     int count();
     
+    List<Producto> obtenerProductoPorCategoria(String nombreCategoria);
+    
+    Producto obtenerProductoPorNombre(String nombre);
+    
 }

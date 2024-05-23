@@ -30,4 +30,5 @@ public interface EstadoPedidoFacadeLocal {
 
     int count();
     
+    EstadoPedido obtenerEstadoPedidoPorDescripcion(String descripcion);
 }
