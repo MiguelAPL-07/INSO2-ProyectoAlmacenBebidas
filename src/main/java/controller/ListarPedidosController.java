@@ -38,9 +38,15 @@ public class ListarPedidosController {
     
     private List<Pedido> listaPedidosPendientes;
     
+    private List<Pedido> listaPedidosAsignados;
+    
     @PostConstruct
     public void init() {
         listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
+        
+        Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
+        listaPedidosAsignados = pedidoEJB.obtenerPedidosPorEmpleadoYEstado(empleado.getPersona().getIdPersona(), 2);
     }
     
     public void asignarPedidoEmpleado(Pedido pedido) {
@@ -56,13 +62,13 @@ public class ListarPedidosController {
         }
     }
     
-    
     public void verPedidosPendientes() {
         listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
     }
     
     public void verPedidosAsignados() {
-        
+        Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        listaPedidosAsignados = pedidoEJB.obtenerPedidosPorEmpleadoYEstado(empleado.getPersona().getIdPersona(), 2);
     }
 
     public PedidoFacadeLocal getPedidoEJB() {
@@ -95,6 +101,14 @@ public class ListarPedidosController {
 
     public void setListaPedidosPendientes(List<Pedido> listaPedidosPendientes) {
         this.listaPedidosPendientes = listaPedidosPendientes;
+    }
+
+    public List<Pedido> getListaPedidosAsignados() {
+        return listaPedidosAsignados;
+    }
+
+    public void setListaPedidosAsignados(List<Pedido> listaPedidosAsignados) {
+        this.listaPedidosAsignados = listaPedidosAsignados;
     }
     
     
