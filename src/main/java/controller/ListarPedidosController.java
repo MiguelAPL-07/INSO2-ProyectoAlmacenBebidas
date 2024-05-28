@@ -10,6 +10,7 @@ import EJB.PedidoFacadeLocal;
 import EJB.PersonaFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -47,6 +48,8 @@ public class ListarPedidosController {
     private String estadoSeleccionado;
     
     private List<String> descripcionEstadosBD;
+    
+    private Pedido pedido;
     
     @PostConstruct
     public void init() {
@@ -91,6 +94,10 @@ public class ListarPedidosController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar", "Error al actualizar el producto"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
+    }
+    
+    public void establecerPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
     
     public void verPedidosPendientes() {
@@ -164,6 +171,71 @@ public class ListarPedidosController {
 
     public void setDescripcionEstadosBD(List<String> descripcionEstadosBD) {
         this.descripcionEstadosBD = descripcionEstadosBD;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.pedidoEJB);
+        hash = 43 * hash + Objects.hashCode(this.estadoPedidoEJB);
+        hash = 43 * hash + Objects.hashCode(this.personaEJB);
+        hash = 43 * hash + Objects.hashCode(this.listaPedidosPendientes);
+        hash = 43 * hash + Objects.hashCode(this.listaPedidosAsignados);
+        hash = 43 * hash + Objects.hashCode(this.listaPedidosCliente);
+        hash = 43 * hash + Objects.hashCode(this.estadoSeleccionado);
+        hash = 43 * hash + Objects.hashCode(this.descripcionEstadosBD);
+        hash = 43 * hash + Objects.hashCode(this.pedido);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ListarPedidosController other = (ListarPedidosController) obj;
+        if (!Objects.equals(this.estadoSeleccionado, other.estadoSeleccionado)) {
+            return false;
+        }
+        if (!Objects.equals(this.pedidoEJB, other.pedidoEJB)) {
+            return false;
+        }
+        if (!Objects.equals(this.estadoPedidoEJB, other.estadoPedidoEJB)) {
+            return false;
+        }
+        if (!Objects.equals(this.personaEJB, other.personaEJB)) {
+            return false;
+        }
+        if (!Objects.equals(this.listaPedidosPendientes, other.listaPedidosPendientes)) {
+            return false;
+        }
+        if (!Objects.equals(this.listaPedidosAsignados, other.listaPedidosAsignados)) {
+            return false;
+        }
+        if (!Objects.equals(this.listaPedidosCliente, other.listaPedidosCliente)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcionEstadosBD, other.descripcionEstadosBD)) {
+            return false;
+        }
+        if (!Objects.equals(this.pedido, other.pedido)) {
+            return false;
+        }
+        return true;
     }
     
     
