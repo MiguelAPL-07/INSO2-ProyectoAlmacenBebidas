@@ -8,6 +8,7 @@ package controller;
 import EJB.EstadoPedidoFacadeLocal;
 import EJB.PedidoFacadeLocal;
 import EJB.PersonaFacadeLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import modelo.EstadoPedido;
 import modelo.Pedido;
 import modelo.Usuario;
 
@@ -40,14 +42,43 @@ public class ListarPedidosController {
     
     private List<Pedido> listaPedidosAsignados;
     
+    private List<Pedido> listaPedidosCliente;
+    
+    private String estadoSeleccionado;
+    
+    private List<String> descripcionEstadosBD;
+    
     @PostConstruct
     public void init() {
         listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
         
-        Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
-        listaPedidosAsignados = pedidoEJB.obtenerPedidosPorEmpleadoYEstado(empleado.getPersona().getIdPersona(), 2);
+        listaPedidosAsignados = pedidoEJB.obtenerPedidosPorEmpleadoYEstado(usuario.getPersona().getIdPersona(), 2);
+        
+        listaPedidosCliente = pedidoEJB.obtenerPedidosPorCliente(usuario.getPersona().getIdPersona());
+        
+        descripcionEstadosBD = new ArrayList<>();
+        
+        descripcionEstadosBD.add("Todos");
+        
+        // Recupera todos las categorias de la base de datos
+        List<EstadoPedido> estadosBD = estadoPedidoEJB.findAll();
+        for(EstadoPedido epActual : estadosBD) {
+            descripcionEstadosBD.add(epActual.getDescripcion());
+        }
+        estadoSeleccionado = "Todos";
     }
+    
+    public void filtrarPedidosPorEstado() {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(estadoSeleccionado.equalsIgnoreCase("Todos")) {
+            listaPedidosCliente = pedidoEJB.obtenerPedidosPorCliente(usuario.getPersona().getIdPersona());
+        } else {
+            EstadoPedido ep = estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion(estadoSeleccionado);
+            listaPedidosCliente = pedidoEJB.obtenerPedidosPorClienteYEstado(usuario.getPersona().getIdPersona(), ep.getIdEstado());
+        }
+    } 
     
     public void asignarPedidoEmpleado(Pedido pedido) {
         Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -109,6 +140,30 @@ public class ListarPedidosController {
 
     public void setListaPedidosAsignados(List<Pedido> listaPedidosAsignados) {
         this.listaPedidosAsignados = listaPedidosAsignados;
+    }
+
+    public List<Pedido> getListaPedidosCliente() {
+        return listaPedidosCliente;
+    }
+
+    public void setListaPedidosCliente(List<Pedido> listaPedidosCliente) {
+        this.listaPedidosCliente = listaPedidosCliente;
+    }
+
+    public String getEstadoSeleccionado() {
+        return estadoSeleccionado;
+    }
+
+    public void setEstadoSeleccionado(String estadoSeleccionado) {
+        this.estadoSeleccionado = estadoSeleccionado;
+    }
+
+    public List<String> getDescripcionEstadosBD() {
+        return descripcionEstadosBD;
+    }
+
+    public void setDescripcionEstadosBD(List<String> descripcionEstadosBD) {
+        this.descripcionEstadosBD = descripcionEstadosBD;
     }
     
     

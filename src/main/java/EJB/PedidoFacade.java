@@ -105,4 +105,50 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
         }
         return pedidos;
     }
+    
+    @Override
+    public List<Pedido> obtenerPedidosPorCliente(int idCliente) {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM Pedido p WHERE p.cliente.idPersona=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", idCliente);
+
+            // Ejecutar consulta
+            pedidos = query.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return pedidos;
+    }
+    
+    
+    @Override
+    public List<Pedido> obtenerPedidosPorClienteYEstado(int idCliente, int idEstado) {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM Pedido p WHERE p.cliente.idPersona=:param1 AND p.estadoPedido.idEstado=:param2";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", idCliente);
+            query.setParameter("param2", idEstado);
+
+            // Ejecutar consulta
+            pedidos = query.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return pedidos;
+    }
 }

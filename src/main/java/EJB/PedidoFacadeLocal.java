@@ -37,4 +37,8 @@ public interface PedidoFacadeLocal {
     List<Pedido> obtenerPedidosPorEstado(String estado);
     
     List<Pedido> obtenerPedidosPorEmpleadoYEstado(int idEmpleado, int idEstado);
+    
+    List<Pedido> obtenerPedidosPorCliente(int idCliente);
+    
+    List<Pedido> obtenerPedidosPorClienteYEstado(int idCliente, int idEstado);
 }
