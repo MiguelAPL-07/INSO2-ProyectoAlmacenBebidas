@@ -8,6 +8,7 @@ package controller;
 import EJB.EstadoPedidoFacadeLocal;
 import EJB.PedidoFacadeLocal;
 import EJB.PersonaFacadeLocal;
+import EJB.UsuarioFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -18,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.EstadoPedido;
 import modelo.Pedido;
+import modelo.Persona;
 import modelo.Usuario;
 
 /**
@@ -38,6 +40,9 @@ public class ListarPedidosController {
     @EJB
     private PersonaFacadeLocal personaEJB;
     
+    @EJB
+    private UsuarioFacadeLocal usuarioEJB;
+    
     private List<Pedido> listaPedidosPendientes;
     
     private List<Pedido> listaPedidosAsignados;
@@ -47,6 +52,13 @@ public class ListarPedidosController {
     private String estadoSeleccionado;
     
     private List<String> descripcionEstadosBD;
+    
+    // Para ver el administrador
+    private List<Pedido> listaPedidosEmpleados;
+    
+    private List<String> nombreEmpleadosBD;
+    
+    private String empleadoSeleccionado;
     
     @PostConstruct
     public void init() {
@@ -62,12 +74,29 @@ public class ListarPedidosController {
         
         descripcionEstadosBD.add("Todos");
         
-        // Recupera todos las categorias de la base de datos
         List<EstadoPedido> estadosBD = estadoPedidoEJB.findAll();
         for(EstadoPedido epActual : estadosBD) {
             descripcionEstadosBD.add(epActual.getDescripcion());
         }
         estadoSeleccionado = "Todos";
+        
+        nombreEmpleadosBD = new ArrayList<>();
+        
+        nombreEmpleadosBD.add("Todos");
+        
+        List<Usuario> empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
+        for(Usuario uActual : empleadosBD) {
+            nombreEmpleadosBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
+        }
+        empleadoSeleccionado = "Todos";
+    }
+    
+    public void filtrarPedidosEmpleados() {
+        if(empleadoSeleccionado.equalsIgnoreCase("Todos")) {
+            listaPedidosEmpleados = pedidoEJB.findAll();
+        } else {
+            listaPedidosEmpleados = pedidoEJB.obtenerPedidosPorEmpleado(Integer.parseInt(empleadoSeleccionado.split(" ")[0]));
+        }
     }
     
     public void filtrarPedidosPorEstado() {
@@ -92,6 +121,32 @@ public class ListarPedidosController {
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
     }
+
+    public List<Pedido> getListaPedidosEmpleados() {
+        return listaPedidosEmpleados;
+    }
+
+    public void setListaPedidosEmpleados(List<Pedido> listaPedidosEmpleados) {
+        this.listaPedidosEmpleados = listaPedidosEmpleados;
+    }
+
+    public List<String> getNombreEmpleadosBD() {
+        return nombreEmpleadosBD;
+    }
+
+    public void setNombreEmpleadosBD(List<String> nombreEmpleadosBD) {
+        this.nombreEmpleadosBD = nombreEmpleadosBD;
+    }
+
+    public String getEmpleadoSeleccionado() {
+        return empleadoSeleccionado;
+    }
+
+    public void setEmpleadoSeleccionado(String empleadoSeleccionado) {
+        this.empleadoSeleccionado = empleadoSeleccionado;
+    }
+    
+    
     
     public void verPedidosPendientes() {
         listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
