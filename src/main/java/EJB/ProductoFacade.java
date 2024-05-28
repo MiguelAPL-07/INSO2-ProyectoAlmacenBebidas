@@ -76,4 +76,27 @@ public class ProductoFacade extends AbstractFacade<Producto> implements Producto
         }
         return producto;
     }
+    
+    @Override
+    public Producto obtenerProductoPorID(int idProducto) {
+        Producto producto = new Producto();
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM Producto p WHERE p.idProducto=:param1";
+            
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+            
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", idProducto);
+            
+            // Ejecutar consulta
+            if(query.getResultList() != null) {
+                producto = (Producto) query.getResultList().get(0);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return producto;
+    }
 }
