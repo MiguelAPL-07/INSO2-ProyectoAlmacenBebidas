@@ -60,6 +60,12 @@ public class ListarPedidosController {
     
     private String empleadoSeleccionado;
     
+    private List<Pedido> pedidosClientes;
+    
+    private List<String> nombreClientesBD;
+    
+    private String clienteSeleccionado;
+    
     @PostConstruct
     public void init() {
         listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
@@ -89,6 +95,16 @@ public class ListarPedidosController {
             nombreEmpleadosBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
         }
         empleadoSeleccionado = "Todos";
+        
+        nombreClientesBD = new ArrayList<>();
+        
+        nombreClientesBD.add("Todos");
+        
+        List<Usuario> clientesBD = usuarioEJB.obtenerUsuariosRol(1);
+        for(Usuario uActual : clientesBD) {
+            nombreClientesBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
+        }
+        clienteSeleccionado = "Todos";
     }
     
     public void filtrarPedidosEmpleados() {
@@ -96,6 +112,14 @@ public class ListarPedidosController {
             listaPedidosEmpleados = pedidoEJB.findAll();
         } else {
             listaPedidosEmpleados = pedidoEJB.obtenerPedidosPorEmpleado(Integer.parseInt(empleadoSeleccionado.split(" ")[0]));
+        }
+    }
+    
+    public void filtrarPedidosClientes() {
+        if(clienteSeleccionado.equalsIgnoreCase("Todos")) {
+            pedidosClientes = pedidoEJB.findAll();
+        } else {
+            pedidosClientes = pedidoEJB.obtenerPedidosPorCliente(Integer.parseInt(clienteSeleccionado.split(" ")[0]));
         }
     }
     
@@ -121,6 +145,40 @@ public class ListarPedidosController {
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
     }
+
+    public UsuarioFacadeLocal getUsuarioEJB() {
+        return usuarioEJB;
+    }
+
+    public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
+        this.usuarioEJB = usuarioEJB;
+    }
+
+    public List<Pedido> getPedidosClientes() {
+        return pedidosClientes;
+    }
+
+    public void setPedidosClientes(List<Pedido> pedidosClientes) {
+        this.pedidosClientes = pedidosClientes;
+    }
+
+    public List<String> getNombreClientesBD() {
+        return nombreClientesBD;
+    }
+
+    public void setNombreClientesBD(List<String> nombreClientesBD) {
+        this.nombreClientesBD = nombreClientesBD;
+    }
+
+    public String getClienteSeleccionado() {
+        return clienteSeleccionado;
+    }
+
+    public void setClienteSeleccionado(String clienteSeleccionado) {
+        this.clienteSeleccionado = clienteSeleccionado;
+    }
+    
+    
 
     public List<Pedido> getListaPedidosEmpleados() {
         return listaPedidosEmpleados;
