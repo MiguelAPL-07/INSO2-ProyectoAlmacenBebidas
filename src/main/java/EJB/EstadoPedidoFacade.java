@@ -56,4 +56,30 @@ public class EstadoPedidoFacade extends AbstractFacade<EstadoPedido> implements 
         }
         return ep;
     }
+    
+    @Override
+    public EstadoPedido obtenerEstadoPedidoPorID(int id) {
+        EstadoPedido ep = null;
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM EstadoPedido e WHERE e.idEstado=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", id);
+
+            // Ejecutar consulta
+            List<EstadoPedido> resultado = query.getResultList();
+
+            
+            if(resultado.size() > 0) {
+                ep = resultado.get(0);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return ep;
+    }
 }

@@ -108,17 +108,31 @@ public class NuevoPedidoController implements Serializable {
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
         try {
             pedidoEJB.create(pedido);
-            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
         } catch (Exception e) {
-            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
-        guardarProductosPedidos();
+        guardarProductosPedidos(cliente);
     }
     
-    public void guardarProductosPedidos() {
+    public void realizarPedidoCliente() {
+        Persona cliente = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        pedido.setFechaCreacion(fechaCreacion);
+        pedido.setCliente(cliente);
+        pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
+        try {
+            pedidoEJB.create(pedido);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            System.out.println("Error al insertar el usuario " + e.getMessage());
+        }
+        guardarProductosPedidos(cliente);
+    }
+    
+    public void guardarProductosPedidos(Persona cliente) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "llega", "PRoducto registrado correctamente"));
-        Persona cliente = clienteEJB.obtenerPersonaPorDNI(dniCliente);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, cliente.getNombre(), "PRoducto registrado correctamente"));
         //Guardar en productos pedidos
         for(Producto pActual : productosSelecionados) {

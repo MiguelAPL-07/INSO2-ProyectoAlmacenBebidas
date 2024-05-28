@@ -33,4 +33,12 @@ public interface PedidoFacadeLocal {
     int count();
     
     Pedido obtenerPedidoPorFechaCreacionYUsuario(Date fechaCreacion, Persona persona);
+    
+    List<Pedido> obtenerPedidosPorEstado(String estado);
+    
+    List<Pedido> obtenerPedidosPorEmpleadoYEstado(int idEmpleado, int idEstado);
+    
+    List<Pedido> obtenerPedidosPorCliente(int idCliente);
+    
+    List<Pedido> obtenerPedidosPorClienteYEstado(int idCliente, int idEstado);
 }
