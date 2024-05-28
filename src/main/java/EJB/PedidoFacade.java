@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -58,5 +59,27 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
             System.out.println(e.toString());
         }
         return p;
+    }
+    
+    @Override
+    public List<Pedido> obtenerPedidosPorEstado(String estado) {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM Pedido p WHERE p.estadoPedido.descripcion=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", estado);
+
+            // Ejecutar consulta
+            pedidos = query.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return pedidos;
     }
 }

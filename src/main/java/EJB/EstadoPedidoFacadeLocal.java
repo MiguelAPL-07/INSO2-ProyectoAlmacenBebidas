@@ -31,4 +31,6 @@ public interface EstadoPedidoFacadeLocal {
     int count();
     
     EstadoPedido obtenerEstadoPedidoPorDescripcion(String descripcion);
+    
+    EstadoPedido obtenerEstadoPedidoPorID(int id);
 }
