@@ -10,7 +10,9 @@ import EJB.PedidoFacadeLocal;
 import EJB.ProductoFacadeLocal;
 import EJB.ProductoPedidoFacadeLocal;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
@@ -77,6 +79,9 @@ public class EditarPedidoController implements Serializable {
         String navegacion = "visualizarPedidosAsignados.xhtml";
         if(estado.equalsIgnoreCase("Recibido")) {
             pedido.setEmpleado(null);
+        } else if(estado.equalsIgnoreCase("Enviado")) {
+            LocalDateTime ld = LocalDateTime.now();
+            pedido.setFechaEnvio(new Date(ld.getYear()-1900, ld.getMonthValue()-1, ld.getDayOfMonth(), ld.getHour(), ld.getMinute(), ld.getSecond()));
         }
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion(estado));
         try {
