@@ -61,7 +61,7 @@
                         <p:outputLabel value="Productos" for="productos" />
                         <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
                             <f:selectItems value="#{nuevoPedidoController.listaDescripcionProductos}" />
-                            <f:ajax event="change" render="prodSeleccion" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                            <f:ajax event="change" render="prodSeleccion, cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
                         </p:selectOneMenu>
                         <p:message for="productos" />
 
@@ -75,7 +75,7 @@
                                      id="cantidad" />
                         <p:message for="cantidad" />
 
-                    </p:panel>>
+                    </p:panel>
                         
                     <p:panelGrid id="panel1" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Añadir" 
@@ -125,8 +125,7 @@
                     </p:panelGrid>
                     
                     <p:panelGrid id="panelTotal" columns="2" style="display:block; text-align:center">
-                        <p:outputLabel value="Total a pagar" />
-                        <p:outputLabel value="#{nuevoPedidoController.totalPagar}" /> 
+                        <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" /> 
                     </p:panelGrid>
 
                     <p:panelGrid id="panelRealizar" columns="1" style="display:block; text-align:center">

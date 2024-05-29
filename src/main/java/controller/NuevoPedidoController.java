@@ -26,6 +26,7 @@ import modelo.Pedido;
 import modelo.Persona;
 import modelo.Producto;
 import modelo.ProductoPedido;
+import modelo.Usuario;
 
 /**
  *
@@ -92,6 +93,7 @@ public class NuevoPedidoController implements Serializable {
     
     public void actualizarProductoSeleccionado() {
         productoSelecionado = productoEJB.obtenerProductoPorNombre(producto);
+        cantidad = "";
     }
     
     public void agregarProductoLista() {
@@ -132,10 +134,12 @@ public class NuevoPedidoController implements Serializable {
         return navegacion;
     }
     
-    public void realizarPedidoCliente() {
-        Persona cliente = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+    public String realizarPedidoCliente() {
+        String navegacion = "visualizarPedidos.xhtml";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+        Usuario cliente = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         pedido.setFechaCreacion(fechaCreacion);
-        pedido.setCliente(cliente);
+        pedido.setCliente(cliente.getPersona());
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
         try {
             pedidoEJB.create(pedido);
@@ -144,7 +148,8 @@ public class NuevoPedidoController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
-        guardarProductosPedidos(cliente);
+        guardarProductosPedidos(cliente.getPersona());
+        return navegacion;
     }
     
     public void guardarProductosPedidos(Persona cliente) {
