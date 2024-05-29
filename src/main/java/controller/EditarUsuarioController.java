@@ -55,6 +55,9 @@ public class EditarUsuarioController implements Serializable {
     @PostConstruct
     public void init(){
         usuario = listUserCon.getUsuario();
+        if(usuario == null) {
+            usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        }
         persona = usuario.getPersona();
         rol = usuario.getRol().getDescripcion();
         roles = new ArrayList<>();
