@@ -33,11 +33,11 @@ public class Pedido implements Serializable {
     private int idPedido;
     
     @Column(name="fechaCreacion")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     
     @Column(name="fechaEnvio")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEnvio;
     
     @Column(name="calle")
