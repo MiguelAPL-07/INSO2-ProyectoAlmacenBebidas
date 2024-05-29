@@ -20,13 +20,15 @@
                    <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
                                     onchange="#{listarProductosController.filtrarProductosPorCategoria()}"
                                     >
-                       <f:ajax event="change" render="tablaProductos" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
+                       <f:ajax event="change" render=":formPrincipal" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
                        <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
                     </p:selectOneMenu>
                     <p:message for="categoria" />
                    
                     <p:dataTable id="tablaProductos" var="prod" value="#{listarProductosController.productosBD}"
                                  rows="10"
+                                 selectionMode="single"
+                                 selection="#{listarProductosController.producto}" rowKey="#{prod.idProducto}"
                                  paginator="true" paginatorPosition="both"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} productos"
@@ -47,38 +49,60 @@
                         <p:column headerText="Cantidad">
                             <h:outputText value="#{prod.cantidad}"/>
                         </p:column>
-                        
-                        <p:column headerText="Agregar stock">
-                            <p:commandLink value="Agregar" 
-                                           update=":formDialogo:dialogo"
-                                           oncomplete="PF('wdialogo').show();"
-                                           actionListener="#{listarProductosController.establecerProducto(prod)}" />
-                        </p:column>
 
-                    </p:dataTable>
-                   
-                </h:form>
-                
-                <h:form id="formDialogo">
-                    
-                    <p:dialog id="dialogo" widgetVar="wdialogo" modal="true"
-                              closeOnEscape="true" draggable="false"
-                              resizable="false" header="Añadir stock">
+                        <f:facet name="footer" >
+                            <p:panelGrid columns="1" style="display:block; text-align:center">
+                                <p:commandButton style="display:block; text-align:center" process="tablaProductos" update=":formPrincipal"
+                                             value="Seleccionar la cantidad a ingresar" 
+                                             />
+                            </p:panelGrid>
+                        </f:facet>
                         
-                        <p:panelGrid columns="2">
+                    </p:dataTable>
+                    
+                    <p:panelGrid columns="1" rendered="#{not empty listarProductosController.producto}">
+
+                        <p:panelGrid columns="1" style="display:block; text-align:center">
+
+                            <p:outputLabel value="Agregar stock" />
+
+                        </p:panelGrid>  
+                        
+                        <p:panelGrid columns="2" style="display:block; text-align:center">
                             
+                            <p:outputLabel value="Producto: #{listarProductosController.producto.nombre}"/>
+                            
+                            <p:outputLabel value="Cantidad disponible: #{listarProductosController.producto.cantidad}"/>
+
                             <p:outputLabel value="Numero de productos a agregar" />
+                            
                             <p:inputNumber value="#{listarProductosController.cantidad}"/>
 
-                            <p:commandButton value="Agregar" actionListener="#{listarProductosController.agregarStock()}"
-                                             update=":formPrincipal:tablaProductos" oncomplete="PF('wdialogo').hide();" />
-                            
-                            <p:commandButton value="Cancelar" onclick="PF('wdialogo').hide();" />
-                            
-                        </p:panelGrid>          
+                        </p:panelGrid>    
                         
-                    </p:dialog>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid rendered="#{empty listarProductosController.producto}" columns="1" style="display:block; text-align:center">
 
+                        <p:outputLabel value="No has seleccionado ningún producto" />
+
+                    </p:panelGrid> 
+                    
+                    <p:panelGrid id="panelActualizar" columns="1" 
+                                 rendered="#{not empty listarProductosController.producto}" 
+                                 style="display:block; text-align:center">
+                        
+                        <p:commandButton value="Agregar" 
+                                         action="#{listarProductosController.agregarStock()}"
+                                         update=":formPrincipal" >
+                        </p:commandButton>
+                        
+                    </p:panelGrid>
+                    
+                    <p:panelGrid id="panelMsg">
+                            <p:messages id="msg" severity="info, fatal" closable="true" />
+                        </p:panelGrid>
+ 
                 </h:form>
                 
             </ui:define>

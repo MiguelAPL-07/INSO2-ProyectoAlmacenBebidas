@@ -116,7 +116,6 @@ public class ListarPedidosController {
     
     public void asignarPedidoEmpleado() {
         Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        pedido.setCalle("esto es la calle");
         pedido.setEmpleado(empleado.getPersona());
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorID(2));
         try {
@@ -127,6 +126,7 @@ public class ListarPedidosController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, e.getMessage() + " " + pedido.getCodigoPostal(), "Error al actualizar el producto"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
+        pedido = null;
     }
     
     public void calcularTotales() {
