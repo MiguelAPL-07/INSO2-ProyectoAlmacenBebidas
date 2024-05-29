@@ -30,4 +30,6 @@ public interface ProductoPedidoFacadeLocal {
 
     int count();
     
+    List<ProductoPedido> obtenerProductosPedidosPorPedido(int idPedido);
+    
 }

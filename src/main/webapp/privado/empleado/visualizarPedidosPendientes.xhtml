@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,17 +12,20 @@
 
             <ui:define name="content">
                 
-                <h:form>
+                <h:form id="formPrincipal">
                     
                    <h1>PEDIDOS PENDIENTES</h1>
                    
                    <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.listaPedidosPendientes}"
+                                selectionMode="single"
+                                selection="#{listarPedidosController.pedido}" rowKey="#{ped.idPedido}"
                                  rows="10"
                                  paginator="true" paginatorPosition="both"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} pedidos"
                                  rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
 
+                       
                         <p:column headerText="Fecha de solicitud">
                             <h:outputText value="#{ped.fechaCreacion}" />
                         </p:column>
@@ -41,16 +45,71 @@
                         <p:column headerText="Estado del pedido">
                             <h:outputText value="#{ped.estadoPedido.descripcion}"/>
                         </p:column>
-                        
-                        <p:column headerText="Asignar pedidos">
-                            <h:commandLink value="Asigname pedido"
-                                           actionListener="#{listarPedidosController.asignarPedidoEmpleado(ped)}">
-                                <p:ajax event="click" listener="#{listarPedidosController.verPedidosPendientes()}" update="tablaPedidos" />
-                            </h:commandLink>
-                        </p:column>
                        
+                        
+                        <f:facet name="footer" >
+                            <p:panelGrid columns="1" style="display:block; text-align:center">
+                                <p:commandButton style="display:block; text-align:center" process="tablaPedidos" update=":formPrincipal"
+                                             value="Expandir el pedido seleccionado" 
+                                             actionListener="#{listarPedidosController.calcularTotales()}"/>
+                            </p:panelGrid>
+                        </f:facet>
+                       
+                        <p:panelGrid id="panelMsg">
+                            <p:messages id="msg" severity="info, fatal" closable="true" />
+                        </p:panelGrid>
+
                     </p:dataTable>
                    
+                    <p:panelGrid columns="1" rendered="#{not empty listarPedidosController.pedido}">
+
+                        <p:panelGrid columns="1" style="display:block; text-align:center">
+
+                            <p:outputLabel value="Pedido seleccionado" />
+
+                        </p:panelGrid>  
+                        
+                        <p:panelGrid columns="4">
+
+                            <p:outputLabel value="ID pedido: #{listarPedidosController.pedido.idPedido}" />
+
+                            <p:outputLabel value="Dirección de envío: #{listarPedidosController.pedido.calle}, #{listarPedidosController.pedido.numeroCalle}, #{listarPedidosController.pedido.codigoPostal}" />
+
+                            <p:outputLabel value="Ciudad: #{listarPedidosController.pedido.ciudad}" />
+
+                            <p:outputLabel value="Cliente: #{listarPedidosController.pedido.cliente.nombre} #{listarPedidosController.pedido.cliente.apellido1} #{listarPedidosController.pedido.cliente.apellido2}" />
+                            
+                            <p:outputLabel value="Total productos: #{listarPedidosController.totalProductos}" />
+                            
+                            <p:outputLabel value="Cantidad total solicitada: #{listarPedidosController.cantidadTotal}" />
+
+                        </p:panelGrid>          
+
+                    </p:panelGrid>
+
+                       
+                    <p:panelGrid rendered="#{empty listarPedidosController.pedido}" columns="1" style="display:block; text-align:center">
+
+                        <p:outputLabel value="No has seleccionado ningún pedido" />
+
+                    </p:panelGrid>  
+                   
+                    <p:panelGrid id="panelActualizar" columns="1" 
+                                 rendered="#{not empty listarPedidosController.pedido}" 
+                                 style="display:block; text-align:center">
+                        
+                        <p:commandButton value="Asignar pedido" 
+                                         action="#{listarPedidosController.asignarPedidoEmpleado()}"
+                                         update="panelMsg, tablaPedidos" />
+                        
+                    </p:panelGrid>
+
+                    <p:panelGrid id="panelMsg">
+                        
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                        
+                    </p:panelGrid>
+
                 </h:form>
                 
             </ui:define>

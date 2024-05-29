@@ -84,6 +84,7 @@ public class ListarProductosController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
+        producto = null;
     }
     
     public void eliminarProducto(Producto producto) {

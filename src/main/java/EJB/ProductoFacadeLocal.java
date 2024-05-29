@@ -34,4 +34,6 @@ public interface ProductoFacadeLocal {
     
     Producto obtenerProductoPorNombre(String nombre);
     
+    Producto obtenerProductoPorID(int idProducto);
+    
 }

@@ -42,6 +42,13 @@
                             <h:outputText value="#{ped.estadoPedido.descripcion}"/>
                         </p:column>
                        
+                       <p:column headerText="Ver productos del pedido">
+                            <h:commandLink value="Ver productos"
+                                           action="visualizarPedido.xhtml"
+                                           actionListener="#{listarPedidosController.establecerPedido(ped)}">
+                            </h:commandLink>
+                        </p:column>
+                       
                     </p:dataTable>
                    
                 </h:form>

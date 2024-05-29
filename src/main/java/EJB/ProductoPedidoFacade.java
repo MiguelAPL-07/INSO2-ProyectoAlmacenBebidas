@@ -5,9 +5,13 @@
  */
 package EJB;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import modelo.Pedido;
 import modelo.ProductoPedido;
 
 /**
@@ -29,4 +33,25 @@ public class ProductoPedidoFacade extends AbstractFacade<ProductoPedido> impleme
         super(ProductoPedido.class);
     }
     
+    @Override
+    public List<ProductoPedido> obtenerProductosPedidosPorPedido(int idPedido) {
+        List<ProductoPedido> productosPedido = new ArrayList<>();
+        try {
+            // Consulta que se quiere realizar
+            String consulta = "FROM ProductoPedido p WHERE p.pedido.idPedido=:param1";
+
+            // Crear consulta
+            Query query = em.createQuery(consulta);
+
+            // Cambiar parametros del WHERE
+            query.setParameter("param1", idPedido);
+
+            // Ejecutar consulta
+            productosPedido = query.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return productosPedido;
+    }
 }
