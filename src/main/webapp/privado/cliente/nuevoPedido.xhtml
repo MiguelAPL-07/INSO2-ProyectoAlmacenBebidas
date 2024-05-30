@@ -74,7 +74,7 @@
                     <p:panelGrid id="panel1" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Añadir" 
                                          actionListener="#{nuevoPedidoController.agregarProductoLista()}"
-                                         update="panelTablaProductos, panelTotal, cantInsufiente, panelPrincipal" />
+                                         update="panelTablaProductos, cantInsufiente, panelPrincipal" />
                     </p:panelGrid>
 
                     <p:panelGrid id="cantInsufiente">
@@ -118,6 +118,11 @@
                                 <p:commandLink value="Eliminar" update="tablaProductos"
                                                actionListener="#{nuevoPedidoController.eliminarProductoSeleccionadoLista(prod.nombre, prod.cantidad)}" />
                             </p:column>
+                            
+                            <f:facet name="footer">
+                                <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" />
+                                
+                            </f:facet>
 
                         </p:dataTable>
                         
