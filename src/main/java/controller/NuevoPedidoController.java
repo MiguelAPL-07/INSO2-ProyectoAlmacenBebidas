@@ -97,9 +97,10 @@ public class NuevoPedidoController implements Serializable {
     }
     
     public void eliminarProductoSeleccionadoLista(String nombre, int cantidad) {
-        for(Producto pActual : productosSelecionados) {
-            if(pActual.getNombre().equalsIgnoreCase(nombre) && pActual.getCantidad() == cantidad) {
-                productosSelecionados.remove(pActual);
+        for(int i = 0; i < productosSelecionados.size(); i++) {
+            if(productosSelecionados.get(i).getNombre().equalsIgnoreCase(nombre) && productosSelecionados.get(i).getCantidad() == cantidad) {
+                totalPagar -= productosSelecionados.get(i).getCantidad()*productosSelecionados.get(i).getPrecio()*(productosSelecionados.get(i).getIva()+100)/100;
+                productosSelecionados.remove(productosSelecionados.get(i));
             }
         }
     }

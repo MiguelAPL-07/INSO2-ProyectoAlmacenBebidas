@@ -61,7 +61,8 @@
                         <p:outputLabel value="Productos" for="productos" />
                         <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
                             <f:selectItems value="#{nuevoPedidoController.listaDescripcionProductos}" />
-                            <f:ajax event="change" render="prodSeleccion, cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                            <f:ajax event="change" render="prodSeleccion" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                            <f:ajax event="change" render="cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
                         </p:selectOneMenu>
                         <p:message for="productos" />
 
@@ -80,7 +81,7 @@
                     <p:panelGrid id="panel1" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Añadir" 
                                          actionListener="#{nuevoPedidoController.agregarProductoLista()}"
-                                         update="panelTablaProductos, panelTotal, cantInsufiente, panelPrincipal" />
+                                         update="panelTablaProductos, cantInsufiente, panelPrincipal" />
                     </p:panelGrid>
 
                     <p:panelGrid id="cantInsufiente">
@@ -119,13 +120,19 @@
                             <p:column headerText="Precio unidad">
                                 <h:outputText value="#{prod.precio}"/>
                             </p:column>
+                            
+                            <p:column headerText="Eliminar productos">
+                                <p:commandLink value="Eliminar" update="tablaProductos"
+                                               actionListener="#{nuevoPedidoController.eliminarProductoSeleccionadoLista(prod.nombre, prod.cantidad)}" />
+                            </p:column>
+                            
+                            <f:facet name="footer">
+                                <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" />
+                                
+                            </f:facet>
 
                         </p:dataTable>
                         
-                    </p:panelGrid>
-                    
-                    <p:panelGrid id="panelTotal" columns="2" style="display:block; text-align:center">
-                        <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" /> 
                     </p:panelGrid>
 
                     <p:panelGrid id="panelRealizar" columns="1" style="display:block; text-align:center">
