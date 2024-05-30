@@ -54,7 +54,8 @@
                         <p:outputLabel value="Productos" for="productos" />
                         <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
                             <f:selectItems value="#{nuevoPedidoController.listaDescripcionProductos}" />
-                            <f:ajax event="change" render="prodSeleccion, cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                            <f:ajax event="change" render="prodSeleccion" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                            <f:ajax event="change" render="cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
                         </p:selectOneMenu>
                         <p:message for="productos" />
 
@@ -111,6 +112,11 @@
 
                             <p:column headerText="Precio unidad">
                                 <h:outputText value="#{prod.precio}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Eliminar productos">
+                                <p:commandLink value="Eliminar" update="tablaProductos"
+                                               actionListener="#{nuevoPedidoController.eliminarProductoSeleccionadoLista(prod.nombre, prod.cantidad)}" />
                             </p:column>
 
                         </p:dataTable>

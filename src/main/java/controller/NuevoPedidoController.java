@@ -96,7 +96,15 @@ public class NuevoPedidoController implements Serializable {
         cantidad = "";
     }
     
-    public void agregarProductoLista() {
+    public void eliminarProductoSeleccionadoLista(String nombre, int cantidad) {
+        for(Producto pActual : productosSelecionados) {
+            if(pActual.getNombre().equalsIgnoreCase(nombre) && pActual.getCantidad() == cantidad) {
+                productosSelecionados.remove(pActual);
+            }
+        }
+    }
+    
+    public void agregarProductoLista() {        
         try {
             Integer.parseInt(cantidad);
             int c = Integer.parseInt(cantidad);
