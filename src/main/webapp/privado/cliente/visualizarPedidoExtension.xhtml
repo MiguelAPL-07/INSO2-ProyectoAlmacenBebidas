@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -18,10 +19,14 @@
                     <h2>DATOS DE PEDIDO</h2>
                     
                     <p:outputLabel value="Fecha de solicitud" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
                     
                     <p:outputLabel value="Fecha de envío" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
                     
                     <p:outputLabel value="Dirección completa(calle, numero, codigo postal)" />
                     <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
