@@ -26,6 +26,7 @@ import modelo.EstadoPedido;
 import modelo.Pedido;
 import modelo.Producto;
 import modelo.ProductoPedido;
+import modelo.Usuario;
 
 /**
  *
@@ -57,7 +58,7 @@ public class EditarPedidoController implements Serializable {
     
     private List<String> listaEstados;
     
-    private String estado;
+    private String estado; 
     
     @PostConstruct
     public void init() {
@@ -76,13 +77,16 @@ public class EditarPedidoController implements Serializable {
     }
     
     public String actualizarPedido() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, pedido.getFechaEnvio().toString(), "Producto actualizado correctamente"));
         String navegacion = "visualizarPedidosAsignados.xhtml";
         if(estado.equalsIgnoreCase("Recibido")) {
             pedido.setEmpleado(null);
-        } else if(estado.equalsIgnoreCase("Enviado")) {
-            LocalDateTime ld = LocalDateTime.now();
-            pedido.setFechaEnvio(new Date(ld.getYear()-1900, ld.getMonthValue()-1, ld.getDayOfMonth(), ld.getHour(), ld.getMinute(), ld.getSecond()));
-        }
+            pedido.setFechaEnvio(null);
+        } else if(estado.equalsIgnoreCase("En preparación")) {
+            Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            pedido.setEmpleado(empleado.getPersona());
+            pedido.setFechaEnvio(null);
+        } 
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion(estado));
         try {
             pedidoEJB.edit(pedido);

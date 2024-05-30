@@ -6,6 +6,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <h:outputScript library="js" name="spanishcalendar.js"/>
+    
     <body>
 
         <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
@@ -88,6 +90,11 @@
                         <f:selectItems value="#{editarPedidoController.listaEstados}" />
                     </p:selectOneMenu>
                     <p:message for="estado" />
+                    
+                    <p:outputLabel value="Selecciona la fecha prevista de envío: " />
+                    
+                    <p:datePicker id="inline" value="#{editarPedidoController.pedido.fechaEnvio}"
+                                  inline="true" showTime="true" timeInput="true" />
 
                     <p:panelGrid id="panelActualizar" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Cambiar estado" 
