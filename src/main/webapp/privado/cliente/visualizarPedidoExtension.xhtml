@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form id="formPrincipal">
+                    
+                    <h1>VER PEDIDO</h1>
+
+                    <h2>DATOS DE PEDIDO</h2>
+                    
+                    <p:outputLabel value="Fecha de solicitud" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" />
+                    
+                    <p:outputLabel value="Fecha de envío" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}" />
+                    
+                    <p:outputLabel value="Dirección completa(calle, numero, codigo postal)" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
+                    
+                    <p:outputLabel value="Ciudad" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
+                    
+                    <h2>PRODUCTOS PEDIDOS</h2>
+                    
+                    <p:panelGrid id="panelTablaProductos" columns="1" style="display:block; text-align:center">
+                    
+                        <p:dataTable id="tablaProductos" var="prod" value="#{editarPedidoController.listaProductos}"
+                                     rows="10"
+                                     paginator="true" paginatorPosition="both"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} productos"
+                                     rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
+
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{prod.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Descripción">
+                                <h:outputText value="#{prod.descripcion}"/>
+                            </p:column>
+
+                            <p:column headerText="Categoria">
+                               <h:outputText value="#{prod.categoria.nombreCategoria}" />
+                            </p:column>
+
+                            <p:column headerText="Cantidad seleccionada">
+                                <h:outputText value="#{prod.cantidad}"/>
+                            </p:column>
+
+                            <p:column headerText="IVA en % aplicable">
+                                <h:outputText value="#{prod.iva}"/>
+                            </p:column>
+
+                            <p:column headerText="Precio unidad">
+                                <h:outputText value="#{prod.precio}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        
+                    </p:panelGrid>
+                    
+                    <p:outputLabel value="Total a pagar: #{editarPedidoController.totalPagar}" />
+                    
+                    <p:panelGrid id="panelMsg">
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                    </p:panelGrid>
+                    
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

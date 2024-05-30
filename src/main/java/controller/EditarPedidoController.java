@@ -59,9 +59,13 @@ public class EditarPedidoController implements Serializable {
     
     private String estado;
     
+    private double totalPagar;
+    
     @PostConstruct
     public void init() {
         pedido = listPedCon.getPedido();
+        
+        totalPagar = 0;
         
         listaProductos = obtenerProductosPedido(pedido.getIdPedido());
         
@@ -101,11 +105,20 @@ public class EditarPedidoController implements Serializable {
         for(ProductoPedido ppActual : pp) {
             Producto p = productoEJB.obtenerProductoPorID(ppActual.getProducto().getIdProducto());
             p.setCantidad(ppActual.getCantidad());
-            productos.add(p);        
+            productos.add(p);    
+            totalPagar += p.getCantidad()*p.getPrecio()*(p.getIva()+100)/100;
         }
         return productos;
     }
 
+    public double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public void setTotalPagar(double totalPagar) {
+        this.totalPagar = totalPagar;
+    }
+    
     public ListarPedidosController getListPedCon() {
         return listPedCon;
     }

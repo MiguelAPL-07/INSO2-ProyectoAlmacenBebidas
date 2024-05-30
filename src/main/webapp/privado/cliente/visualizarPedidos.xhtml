@@ -53,8 +53,8 @@
                        
                         <p:column headerText="Ver prodcutos">
                             <p:commandLink value="Productos" 
-                                           action="editarUsuario.xhtml"
-                                           />
+                                           action="visualizarPedidoExtension.xhtml"
+                                           actionListener="#{listarPedidosController.establecerPedido(ped)}"/>
                         </p:column>    
                        
                     </p:dataTable>
