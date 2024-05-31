@@ -66,9 +66,9 @@ public class EditarProductoController implements Serializable {
         producto.setCategoria(categoriaEJB.obtenerCategoriaPorNombre(categoria));
         try {
             productoEJB.edit(producto);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualización correcta", "Producto actualizado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto actualizado correctamente", "Producto actualizado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar", "Error al actualizar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar el producto", "Error al actualizar el producto"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
         

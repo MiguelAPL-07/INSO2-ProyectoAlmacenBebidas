@@ -63,11 +63,11 @@ public class AdministrarRolesController implements Serializable {
          try {
              // Se crea el rol
             rolEJB.create(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado correcto", "Rol añadido correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Rol añadido correctament", "Rol añadido correctamente"));
             // Se actualiza la lista de roles
             listaRolesBD = rolEJB.findAll();
          } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al agregar", "Error al añadir el rol"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al añadir el rol", "Error al añadir el rol"));
             System.out.println("Error al insertar el rol " + e.getMessage());
         }
     }
@@ -75,11 +75,11 @@ public class AdministrarRolesController implements Serializable {
     public void modificarRol() {
         try {
             rolEJB.edit(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificado correcto", "Rol modificado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Rol modificado correctamente", "Rol modificado correctamente"));
             // Se actualiza la lista de roles
             listaRolesBD = rolEJB.findAll();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modificar", "Error al modificar el rol"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modificar el rol", "Error al modificar el rol"));
             System.out.println("Error al modificar el rol " + e.getMessage());
         }
     }
@@ -87,11 +87,11 @@ public class AdministrarRolesController implements Serializable {
     public void eliminarRol() {
         try {
             rolEJB.remove(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminado correcto", "Rol eliminado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Rol eliminado correctamente", "Rol eliminado correctamente"));
             // Se actualiza la lista de roles
             listaRolesBD = rolEJB.findAll();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el rol"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar el rol", "Error al eliminar el rol"));
             System.out.println("Error al eliminar el rol " + e.getMessage());
         }
     }

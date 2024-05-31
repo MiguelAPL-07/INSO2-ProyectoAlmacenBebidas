@@ -61,11 +61,11 @@ public class AdministrarCategoriasController implements Serializable {
     public void insertarCategoria() {
          try {
             categoriaEJB.create(categoria);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado correcto", "Categoria añadida correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria añadida correctamente", "Categoria añadida correctamente"));
             // Se actualiza la lista de categorias
             listaCategoriasBD = categoriaEJB.findAll();
          } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al agregar", "Error al añadir la categoria"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al añadir la categoria", "Error al añadir la categoria"));
             System.out.println("Error al insertar la categoria " + e.getMessage());
         }
     }
@@ -73,11 +73,11 @@ public class AdministrarCategoriasController implements Serializable {
     public void modificarCategoria() {
         try {
             categoriaEJB.edit(categoria);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificado correcto", "Categoria modificada correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria modificada correctamente", "Categoria modificada correctamente"));
             // Se actualiza la lista de categorias
             listaCategoriasBD = categoriaEJB.findAll();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modificar", "Error al modificar la categoria"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modificar la categoria", "Error al modificar la categoria"));
             System.out.println("Error al modificar la categoria " + e.getMessage());
         }
     }
@@ -85,11 +85,11 @@ public class AdministrarCategoriasController implements Serializable {
     public void eliminarCategoria() {
         try {
             categoriaEJB.remove(categoria);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminado correcto", "Categoria eliminada correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria eliminada correctamente", "Categoria eliminada correctamente"));
             // Se actualiza la lista de categorias
             listaCategoriasBD = categoriaEJB.findAll();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar la categoria"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar la categoria", "Error al eliminar la categoria"));
             System.out.println("Error al eliminar la categoria " + e.getMessage());
         }
     }

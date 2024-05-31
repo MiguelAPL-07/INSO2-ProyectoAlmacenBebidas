@@ -61,9 +61,9 @@ public class ListarUsuariosController {
             personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             usuariosBD = usuarioEJB.findAll();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado con éxito", "Usuario eliminado con éxito"));
         } catch(Exception e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar el usuario", "Error al eliminar el usuario"));
             System.out.println("Error al eliminar el usuario " + e.getMessage());
         }
     }
@@ -73,9 +73,9 @@ public class ListarUsuariosController {
             personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             clientesBD = usuarioEJB.obtenerUsuariosRol(1);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado con éxito", "Usuario eliminado con éxito"));
         } catch(Exception e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar el usuario", "Error al eliminar el usuario"));
             System.out.println("Error al eliminar el usuario " + e.getMessage());
         }
     }
@@ -85,9 +85,9 @@ public class ListarUsuariosController {
             personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario eliminado con éxito", "Usuario eliminado con éxito"));
         } catch(Exception e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el usuario"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar el usuario", "Error al eliminar el usuario"));
             System.out.println("Error al eliminar el usuario " + e.getMessage());
         }
     }

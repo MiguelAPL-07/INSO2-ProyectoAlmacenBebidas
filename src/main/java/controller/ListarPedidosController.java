@@ -175,9 +175,9 @@ public class ListarPedidosController {
         try {
             pedidoEJB.edit(pedido);
             listaPedidosPendientes = pedidoEJB.obtenerPedidosPorEstado("Recibido");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualización correcta", "Producto actualizado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido asignado correctamente", "Pedido asignado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, e.getMessage() + " " + pedido.getCodigoPostal(), "Error al actualizar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al asignar el pedido", "Error al asignar el pedido"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
         pedido = null;

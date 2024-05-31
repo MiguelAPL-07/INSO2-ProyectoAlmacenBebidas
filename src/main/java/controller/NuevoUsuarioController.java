@@ -66,9 +66,9 @@ public class NuevoUsuarioController implements Serializable {
         usuario.setPersona(persona);
         try {
             usuarioEJB.create(usuario);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro correcto", "Usuario registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario registrado correctamente", "Usuario registrado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al registrar", "Error al registrar el usuario"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al registrar el usuario", "Error al registrar el usuario"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
         return "visualizarUsuarios.xhtml";

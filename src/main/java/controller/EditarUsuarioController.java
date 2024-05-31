@@ -76,9 +76,9 @@ public class EditarUsuarioController implements Serializable {
         try {
             usuarioEJB.edit(usuario);
             personaEJB.edit(persona);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificación correcta", "Usuario modificado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado con éxito", "Usuario modificado con éxito"));
         } catch(Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modficar", "Error al modificar el usuario"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al modificar el usuario", "Error al modificar el usuario"));
             System.out.println("Error al modificar el usuario "+e.getMessage());
         }
         return navegacion;

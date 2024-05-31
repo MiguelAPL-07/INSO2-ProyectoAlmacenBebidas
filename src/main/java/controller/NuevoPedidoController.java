@@ -116,13 +116,13 @@ public class NuevoPedidoController implements Serializable {
                     productosSelecionados.add(p);
                     totalPagar += c*p.getPrecio()*(p.getIva()+100)/100;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No hay suficiente stock", "Error al registrar el producto"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No hay suficiente stock", "No hay suficiente stock"));
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero mayor de 0", "Error al registrar el producto"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero mayor de 0", "Error. Tienes que introducir un numero mayor de 0"));
             }
         } catch (NumberFormatException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero en la cantidad", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero en la cantidad", "Error"));
         }
     }
     
@@ -134,9 +134,9 @@ public class NuevoPedidoController implements Serializable {
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
         try {
             pedidoEJB.create(pedido);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido realizado correctamente", "Pedido realizado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha podido realizar el pedido", "Error"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
         guardarProductosPedidos(cliente);
@@ -145,16 +145,15 @@ public class NuevoPedidoController implements Serializable {
     
     public String realizarPedidoCliente() {
         String navegacion = "visualizarPedidos.xhtml";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
         Usuario cliente = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         pedido.setFechaCreacion(fechaCreacion);
         pedido.setCliente(cliente.getPersona());
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
         try {
             pedidoEJB.create(pedido);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido realizado correctamente", "Pedido realizado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha podido realizar el pedido", "Error"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
         guardarProductosPedidos(cliente.getPersona());
@@ -171,9 +170,9 @@ public class NuevoPedidoController implements Serializable {
             pp.setProducto(productoEJB.obtenerProductoPorNombre(pActual.getNombre()));
             try {
                 productoPedidoEJB.create(pp);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha guardado el producto en la lista", "Se ha guardado el producto en la lista"));
             } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, e.toString(), "Error al registrar el producto"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha guardado el producto en la lista", "No se ha guardado el producto en la lista"));
                 System.out.println("Error al insertar el usuario " + e.getMessage());
             }
         }
@@ -184,9 +183,9 @@ public class NuevoPedidoController implements Serializable {
         p.setCantidad(p.getCantidad() - cantidad);
         try {
             productoEJB.edit(p);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualización correcta", "Producto actualizado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cantidad actualizada correctamente", "Cantidad actualizada correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar", "Error al actualizar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha actualizado la cantidad", "No se ha actualizado la cantidad"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
     }

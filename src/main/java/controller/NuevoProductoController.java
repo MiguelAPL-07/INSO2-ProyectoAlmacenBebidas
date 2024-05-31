@@ -59,9 +59,9 @@ public class NuevoProductoController implements Serializable {
         producto.setCategoria(categoriaEJB.obtenerCategoriaPorNombre(categoria));
         try {
             productoEJB.create(producto);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto guardado correctamente", "Producto guardado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al guardar el producto", "Error al guardar el producto"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
     }

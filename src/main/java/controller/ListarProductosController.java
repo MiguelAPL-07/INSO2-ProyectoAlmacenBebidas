@@ -79,9 +79,9 @@ public class ListarProductosController implements Serializable {
         try {
             productoEJB.edit(producto);
             filtrarProductosPorCategoria();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Stock agregado correctamente", "Stock agregado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al agregar el stock", "Error al agregar el stock"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
         producto = null;
@@ -91,9 +91,9 @@ public class ListarProductosController implements Serializable {
         try {
             productoEJB.remove(producto);
             filtrarProductosPorCategoria();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Producto eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto eliminado correctamente", "Producto eliminado correctamente"));
         } catch(Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar", "Error al eliminar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al eliminar el producto", "Error al eliminar el producto"));
             System.out.println("Error al eliminar la publicación "+e.getMessage());
         }
     }

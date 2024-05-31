@@ -81,7 +81,6 @@ public class EditarPedidoController implements Serializable {
     }
     
     public String actualizarPedido() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, pedido.getFechaEnvio().toString(), "Producto actualizado correctamente"));
         String navegacion = "visualizarPedidosAsignados.xhtml";
         if(estado.equalsIgnoreCase("Recibido")) {
             pedido.setEmpleado(null);
@@ -94,9 +93,9 @@ public class EditarPedidoController implements Serializable {
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion(estado));
         try {
             pedidoEJB.edit(pedido);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualización correcta", "Producto actualizado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido actualizado correctamente", "Pedido actualizado correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar", "Error al actualizar el producto"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha actualizado el pedido", "No se ha actualizado el pedido"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
         
