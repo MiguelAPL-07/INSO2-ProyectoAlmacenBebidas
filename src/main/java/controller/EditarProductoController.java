@@ -74,6 +74,10 @@ public class EditarProductoController implements Serializable {
         
         return navegacion;
     }
+    
+    public String volverAtras() {
+        return "administrarProductos.xhtml";
+    }
 
     public ListarProductosController getListProdCon() {
         return listProdCon;

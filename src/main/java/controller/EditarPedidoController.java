@@ -99,6 +99,10 @@ public class EditarPedidoController implements Serializable {
         return navegacion;
     }
     
+    public String volverAtras() {
+        return "visualizarPedidosAsignados.xhtml";
+    }
+    
     public List<Producto> obtenerProductosPedido(int idPedido) {
         List<Producto> productos = new ArrayList<>();
         List<ProductoPedido> pp = productoPedidoEJB.obtenerProductosPedidosPorPedido(idPedido);

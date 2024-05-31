@@ -97,14 +97,16 @@
                                   inline="true" showTime="true" timeInput="true" />
 
                     <p:panelGrid id="panelActualizar" columns="1" style="display:block; text-align:center">
-                        <p:commandButton value="Cambiar estado" 
+                        <p:commandButton value="Actualizar pedido" 
                                          action="#{editarPedidoController.actualizarPedido()}"
-                                         update="panelMsg">
-                            
-                        </p:commandButton>
+                                         update="panelMsg" />
+                        
+                        <p:commandButton value="Cancelar" 
+                                         action="#{editarPedidoController.volverAtras()}" />
+                        
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg">
+                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
                         <p:messages id="msg" severity="info, fatal" closable="true" />
                     </p:panelGrid>
                     
