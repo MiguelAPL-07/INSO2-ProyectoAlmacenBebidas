@@ -121,40 +121,40 @@
                                      paginator="true" paginatorPosition="both"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} productos"
-                                     rowsPerPageTemplate="5,10,{ShowAll|'Todos'}"
-                                     style="display:block; text-align:center">
+                                     rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
 
-                            <p:column headerText="Nombre" style="display:block; text-align:center">
+                            <p:column headerText="Nombre">
                                 <h:outputText value="#{prod.nombre}" />
                             </p:column>
 
-                            <p:column headerText="Descripción" style="display:block; text-align:center">
+                            <p:column headerText="Descripción">
                                 <h:outputText value="#{prod.descripcion}"/>
                             </p:column>
 
-                            <p:column headerText="Categoria" style="display:block; text-align:center">
+                            <p:column headerText="Categoria">
                                <h:outputText value="#{prod.categoria.nombreCategoria}" />
                             </p:column>
 
-                            <p:column headerText="Cantidad seleccionada" style="display:block; text-align:center"> 
+                            <p:column headerText="Cantidad seleccionada">
                                 <h:outputText value="#{prod.cantidad}"/>
                             </p:column>
 
-                            <p:column headerText="IVA en % aplicable" style="display:block; text-align:center">
+                            <p:column headerText="IVA en % aplicable">
                                 <h:outputText value="#{prod.iva}"/>
                             </p:column>
 
-                            <p:column headerText="Precio unidad" style="display:block; text-align:center">
+                            <p:column headerText="Precio unidad">
                                 <h:outputText value="#{prod.precio}"/>
                             </p:column>
                             
-                            <p:column headerText="Eliminar productos" style="display:block; text-align:center">
+                            <p:column headerText="Eliminar productos">
                                 <p:commandLink value="Eliminar" update="tablaProductos"
                                                actionListener="#{nuevoPedidoController.eliminarProductoSeleccionadoLista(prod.nombre, prod.cantidad)}" />
                             </p:column>
                             
                             <f:facet name="footer">
                                 <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" />
+                                
                             </f:facet>
 
                         </p:dataTable>
