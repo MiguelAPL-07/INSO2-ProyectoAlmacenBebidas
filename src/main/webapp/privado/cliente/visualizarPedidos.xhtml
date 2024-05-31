@@ -16,13 +16,15 @@
                     
                    <h1>VER TODOS LOS PEDIDOS REALIZADOS</h1>
                    
-                    <p:outputLabel value="Filtrar los pedidos por el estado" for="estado" />
-                    <p:selectOneMenu id="estado" value="#{listarPedidosController.estadoSeleccionado}"
-                                     onchange="#{listarPedidosController.filtrarPedidosPorEstado()}">
-                        <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosPorEstado()}" />
-                        <f:selectItems value="#{listarPedidosController.descripcionEstadosBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="estado" />
+                   <p:panel>
+                        <p:fieldset legend="Filtrar pedidos por estado del pedido">
+                            <p:selectOneMenu id="estado" value="#{listarPedidosController.estadoSeleccionado}"
+                                        onchange="#{listarPedidosController.filtrarPedidosPorEstado()}">
+                                <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosPorEstado()}" />
+                                <f:selectItems value="#{listarPedidosController.descripcionEstadosBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                    </p:panel>
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.listaPedidosCliente}"
                                  rows="10"
