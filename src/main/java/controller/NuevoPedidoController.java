@@ -11,7 +11,7 @@ import EJB.PersonaFacadeLocal;
 import EJB.ProductoFacadeLocal;
 import EJB.ProductoPedidoFacadeLocal;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +26,7 @@ import modelo.Pedido;
 import modelo.Persona;
 import modelo.Producto;
 import modelo.ProductoPedido;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import modelo.Usuario;
 
 /**
  *
@@ -64,7 +64,7 @@ public class NuevoPedidoController implements Serializable {
     
     private Producto productoSelecionado;
     
-    private int cantidad;
+    private String cantidad;
     
     private double totalPagar;
     
@@ -87,21 +87,47 @@ public class NuevoPedidoController implements Serializable {
         producto = listaDescripcionProductos.get(0);
         actualizarProductoSeleccionado();
         
-        fechaCreacion = new Date(System.currentTimeMillis());
+        LocalDateTime ld = LocalDateTime.now();
+        fechaCreacion = new Date(ld.getYear()-1900, ld.getMonthValue()-1, ld.getDayOfMonth(), ld.getHour(), ld.getMinute(), ld.getSecond());
     }
     
     public void actualizarProductoSeleccionado() {
         productoSelecionado = productoEJB.obtenerProductoPorNombre(producto);
+        cantidad = "";
     }
     
-    public void agregarProductoLista() {
-        Producto p = productoEJB.obtenerProductoPorNombre(producto);
-        p.setCantidad(cantidad);
-        productosSelecionados.add(p);
-        totalPagar += cantidad*p.getPrecio()*(p.getIva()+100)/100;
+    public void eliminarProductoSeleccionadoLista(String nombre, int cantidad) {
+        for(int i = 0; i < productosSelecionados.size(); i++) {
+            if(productosSelecionados.get(i).getNombre().equalsIgnoreCase(nombre) && productosSelecionados.get(i).getCantidad() == cantidad) {
+                totalPagar -= productosSelecionados.get(i).getCantidad()*productosSelecionados.get(i).getPrecio()*(productosSelecionados.get(i).getIva()+100)/100;
+                productosSelecionados.remove(productosSelecionados.get(i));
+            }
+        }
     }
     
-    public void realizarPedido() {
+    public void agregarProductoLista() {        
+        try {
+            Integer.parseInt(cantidad);
+            int c = Integer.parseInt(cantidad);
+            if(c > 0) {
+                Producto p = productoEJB.obtenerProductoPorNombre(producto);
+                if(c <= p.getCantidad()) {
+                    p.setCantidad(c);
+                    productosSelecionados.add(p);
+                    totalPagar += c*p.getPrecio()*(p.getIva()+100)/100;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No hay suficiente stock", "Error al registrar el producto"));
+                }
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero mayor de 0", "Error al registrar el producto"));
+            }
+        } catch (NumberFormatException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error. Tienes que introducir un numero en la cantidad", "Error al registrar el producto"));
+        }
+    }
+    
+    public String realizarPedido() {
+        String navegacion = "visualizarPedidosPendientes.xhtml";
         Persona cliente = clienteEJB.obtenerPersonaPorDNI(dniCliente);
         pedido.setFechaCreacion(fechaCreacion);
         pedido.setCliente(cliente);
@@ -114,12 +140,15 @@ public class NuevoPedidoController implements Serializable {
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
         guardarProductosPedidos(cliente);
+        return navegacion;
     }
     
-    public void realizarPedidoCliente() {
-        Persona cliente = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+    public String realizarPedidoCliente() {
+        String navegacion = "visualizarPedidos.xhtml";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
+        Usuario cliente = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         pedido.setFechaCreacion(fechaCreacion);
-        pedido.setCliente(cliente);
+        pedido.setCliente(cliente.getPersona());
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion("Recibido"));
         try {
             pedidoEJB.create(pedido);
@@ -128,20 +157,18 @@ public class NuevoPedidoController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al insertar", "Error al registrar el producto"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
-        guardarProductosPedidos(cliente);
+        guardarProductosPedidos(cliente.getPersona());
+        return navegacion;
     }
     
     public void guardarProductosPedidos(Persona cliente) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "llega", "PRoducto registrado correctamente"));
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, cliente.getNombre(), "PRoducto registrado correctamente"));
         //Guardar en productos pedidos
         for(Producto pActual : productosSelecionados) {
             ProductoPedido pp = new ProductoPedido();
-            
+            actualizarCantidadProducto(pActual.getCantidad(), pActual.getIdProducto());
             pp.setCantidad(pActual.getCantidad());
             pp.setPedido(pedidoEJB.obtenerPedidoPorFechaCreacionYUsuario(fechaCreacion, cliente));
             pp.setProducto(productoEJB.obtenerProductoPorNombre(pActual.getNombre()));
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"si " + pp.getPedido().getIdPedido(), "PRoducto registrado correctamente"));
             try {
                 productoPedidoEJB.create(pp);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insercion correcta", "PRoducto registrado correctamente"));
@@ -152,17 +179,17 @@ public class NuevoPedidoController implements Serializable {
         }
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
+    public void actualizarCantidadProducto(int cantidad, int id) {
+        Producto p = productoEJB.obtenerProductoPorID(id);
+        p.setCantidad(p.getCantidad() - cantidad);
+        try {
+            productoEJB.edit(p);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualización correcta", "Producto actualizado correctamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al actualizar", "Error al actualizar el producto"));
+            System.out.println("Error al insertar la publicación " + e.getMessage());
+        }
     }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-   
-    
-    
 
     public PedidoFacadeLocal getPedidoEJB() {
         return pedidoEJB;
@@ -252,11 +279,11 @@ public class NuevoPedidoController implements Serializable {
         this.productoSelecionado = productoSelecionado;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -268,22 +295,31 @@ public class NuevoPedidoController implements Serializable {
         this.totalPagar = totalPagar;
     }
 
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.pedidoEJB);
-        hash = 83 * hash + Objects.hashCode(this.pedido);
-        hash = 83 * hash + Objects.hashCode(this.clienteEJB);
-        hash = 83 * hash + Objects.hashCode(this.dniCliente);
-        hash = 83 * hash + Objects.hashCode(this.estadoPedidoEJB);
-        hash = 83 * hash + Objects.hashCode(this.productoPedidoEJB);
-        hash = 83 * hash + Objects.hashCode(this.productoEJB);
-        hash = 83 * hash + Objects.hashCode(this.listaDescripcionProductos);
-        hash = 83 * hash + Objects.hashCode(this.productosSelecionados);
-        hash = 83 * hash + Objects.hashCode(this.producto);
-        hash = 83 * hash + Objects.hashCode(this.productoSelecionado);
-        hash = 83 * hash + this.cantidad;
-        hash = 83 * hash + (int) (Double.doubleToLongBits(this.totalPagar) ^ (Double.doubleToLongBits(this.totalPagar) >>> 32));
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.pedidoEJB);
+        hash = 59 * hash + Objects.hashCode(this.pedido);
+        hash = 59 * hash + Objects.hashCode(this.clienteEJB);
+        hash = 59 * hash + Objects.hashCode(this.dniCliente);
+        hash = 59 * hash + Objects.hashCode(this.estadoPedidoEJB);
+        hash = 59 * hash + Objects.hashCode(this.productoPedidoEJB);
+        hash = 59 * hash + Objects.hashCode(this.productoEJB);
+        hash = 59 * hash + Objects.hashCode(this.listaDescripcionProductos);
+        hash = 59 * hash + Objects.hashCode(this.productosSelecionados);
+        hash = 59 * hash + Objects.hashCode(this.producto);
+        hash = 59 * hash + Objects.hashCode(this.productoSelecionado);
+        hash = 59 * hash + Objects.hashCode(this.cantidad);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.totalPagar) ^ (Double.doubleToLongBits(this.totalPagar) >>> 32));
+        hash = 59 * hash + Objects.hashCode(this.fechaCreacion);
         return hash;
     }
 
@@ -299,9 +335,6 @@ public class NuevoPedidoController implements Serializable {
             return false;
         }
         final NuevoPedidoController other = (NuevoPedidoController) obj;
-        if (this.cantidad != other.cantidad) {
-            return false;
-        }
         if (Double.doubleToLongBits(this.totalPagar) != Double.doubleToLongBits(other.totalPagar)) {
             return false;
         }
@@ -309,6 +342,9 @@ public class NuevoPedidoController implements Serializable {
             return false;
         }
         if (!Objects.equals(this.producto, other.producto)) {
+            return false;
+        }
+        if (!Objects.equals(this.cantidad, other.cantidad)) {
             return false;
         }
         if (!Objects.equals(this.pedidoEJB, other.pedidoEJB)) {
@@ -336,6 +372,9 @@ public class NuevoPedidoController implements Serializable {
             return false;
         }
         if (!Objects.equals(this.productoSelecionado, other.productoSelecionado)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaCreacion, other.fechaCreacion)) {
             return false;
         }
         return true;
