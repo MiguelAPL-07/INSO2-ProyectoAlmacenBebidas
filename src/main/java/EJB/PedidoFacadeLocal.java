@@ -41,4 +41,6 @@ public interface PedidoFacadeLocal {
     List<Pedido> obtenerPedidosPorCliente(int idCliente);
     
     List<Pedido> obtenerPedidosPorClienteYEstado(int idCliente, int idEstado);
+    
+    List<Pedido> obtenerPedidosPorEmpleado(int idEmpleado);
 }

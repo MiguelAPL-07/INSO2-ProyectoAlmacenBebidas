@@ -8,6 +8,7 @@ package controller;
 import EJB.EstadoPedidoFacadeLocal;
 import EJB.PedidoFacadeLocal;
 import EJB.PersonaFacadeLocal;
+import EJB.UsuarioFacadeLocal;
 import EJB.ProductoFacadeLocal;
 import EJB.ProductoPedidoFacadeLocal;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.EstadoPedido;
 import modelo.Pedido;
+import modelo.Persona;
 import modelo.Producto;
 import modelo.ProductoPedido;
 import modelo.Usuario;
@@ -44,10 +46,14 @@ public class ListarPedidosController {
     private PersonaFacadeLocal personaEJB;
     
     @EJB
+
+    private UsuarioFacadeLocal usuarioEJB;
+  
     private ProductoFacadeLocal productoEJB;
     
     @EJB
     private ProductoPedidoFacadeLocal productoPedidoEJB;
+
     
     private List<Pedido> listaPedidosPendientes;
     
@@ -59,6 +65,20 @@ public class ListarPedidosController {
     
     private List<String> descripcionEstadosBD;
     
+
+    // Para ver el administrador
+    private List<Pedido> listaPedidosEmpleados;
+    
+    private List<String> nombreEmpleadosBD;
+    
+    private String empleadoSeleccionado;
+    
+    private List<Pedido> pedidosClientes;
+    
+    private List<String> nombreClientesBD;
+    
+    private String clienteSeleccionado;
+  
     private Pedido pedido;
     
     private List<Producto> listaProductos;
@@ -81,13 +101,47 @@ public class ListarPedidosController {
         
         descripcionEstadosBD.add("Todos");
         
-        // Recupera todos las categorias de la base de datos
         List<EstadoPedido> estadosBD = estadoPedidoEJB.findAll();
         for(EstadoPedido epActual : estadosBD) {
             descripcionEstadosBD.add(epActual.getDescripcion());
         }
         estadoSeleccionado = "Todos";
         
+        nombreEmpleadosBD = new ArrayList<>();
+        
+        nombreEmpleadosBD.add("Todos");
+        
+        List<Usuario> empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
+        for(Usuario uActual : empleadosBD) {
+            nombreEmpleadosBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
+        }
+        empleadoSeleccionado = "Todos";
+        
+        nombreClientesBD = new ArrayList<>();
+        
+        nombreClientesBD.add("Todos");
+        
+        List<Usuario> clientesBD = usuarioEJB.obtenerUsuariosRol(1);
+        for(Usuario uActual : clientesBD) {
+            nombreClientesBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
+        }
+        clienteSeleccionado = "Todos";
+    }
+    
+    public void filtrarPedidosEmpleados() {
+        if(empleadoSeleccionado.equalsIgnoreCase("Todos")) {
+            listaPedidosEmpleados = pedidoEJB.findAll();
+        } else {
+            listaPedidosEmpleados = pedidoEJB.obtenerPedidosPorEmpleado(Integer.parseInt(empleadoSeleccionado.split(" ")[0]));
+        }
+    }
+    
+    public void filtrarPedidosClientes() {
+        if(clienteSeleccionado.equalsIgnoreCase("Todos")) {
+            pedidosClientes = pedidoEJB.findAll();
+        } else {
+            pedidosClientes = pedidoEJB.obtenerPedidosPorCliente(Integer.parseInt(clienteSeleccionado.split(" ")[0]));
+        }
         listaProductos = new ArrayList<>();
     }
     
@@ -128,6 +182,66 @@ public class ListarPedidosController {
         }
         pedido = null;
     }
+
+    public UsuarioFacadeLocal getUsuarioEJB() {
+        return usuarioEJB;
+    }
+
+    public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
+        this.usuarioEJB = usuarioEJB;
+    }
+
+    public List<Pedido> getPedidosClientes() {
+        return pedidosClientes;
+    }
+
+    public void setPedidosClientes(List<Pedido> pedidosClientes) {
+        this.pedidosClientes = pedidosClientes;
+    }
+
+    public List<String> getNombreClientesBD() {
+        return nombreClientesBD;
+    }
+
+    public void setNombreClientesBD(List<String> nombreClientesBD) {
+        this.nombreClientesBD = nombreClientesBD;
+    }
+
+    public String getClienteSeleccionado() {
+        return clienteSeleccionado;
+    }
+
+    public void setClienteSeleccionado(String clienteSeleccionado) {
+        this.clienteSeleccionado = clienteSeleccionado;
+    }
+    
+    
+
+    public List<Pedido> getListaPedidosEmpleados() {
+        return listaPedidosEmpleados;
+    }
+
+    public void setListaPedidosEmpleados(List<Pedido> listaPedidosEmpleados) {
+        this.listaPedidosEmpleados = listaPedidosEmpleados;
+    }
+
+    public List<String> getNombreEmpleadosBD() {
+        return nombreEmpleadosBD;
+    }
+
+    public void setNombreEmpleadosBD(List<String> nombreEmpleadosBD) {
+        this.nombreEmpleadosBD = nombreEmpleadosBD;
+    }
+
+    public String getEmpleadoSeleccionado() {
+        return empleadoSeleccionado;
+    }
+
+    public void setEmpleadoSeleccionado(String empleadoSeleccionado) {
+        this.empleadoSeleccionado = empleadoSeleccionado;
+    }
+    
+    
     
     public void calcularTotales() {
         listaProductos = obtenerProductosPedido(pedido.getIdPedido());
