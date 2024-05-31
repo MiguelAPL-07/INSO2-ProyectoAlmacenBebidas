@@ -65,6 +65,10 @@ public class NuevoProductoController implements Serializable {
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
     }
+    
+    public String volverAtras() {
+        return "administrarProductos.xhtml";
+    }
 
     public ProductoFacadeLocal getProductoEJB() {
         return productoEJB;

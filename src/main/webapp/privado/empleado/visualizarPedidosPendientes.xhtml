@@ -27,7 +27,9 @@
 
                        
                         <p:column headerText="Fecha de solicitud">
-                            <h:outputText value="#{ped.fechaCreacion}" />
+                            <h:outputText value="#{ped.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="Dirección de envío">

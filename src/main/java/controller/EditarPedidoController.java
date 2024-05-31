@@ -26,6 +26,7 @@ import modelo.EstadoPedido;
 import modelo.Pedido;
 import modelo.Producto;
 import modelo.ProductoPedido;
+import modelo.Usuario;
 
 /**
  *
@@ -57,11 +58,15 @@ public class EditarPedidoController implements Serializable {
     
     private List<String> listaEstados;
     
-    private String estado;
+    private String estado; 
+    
+    private double totalPagar;
     
     @PostConstruct
     public void init() {
         pedido = listPedCon.getPedido();
+        
+        totalPagar = 0;
         
         listaProductos = obtenerProductosPedido(pedido.getIdPedido());
         
@@ -76,13 +81,16 @@ public class EditarPedidoController implements Serializable {
     }
     
     public String actualizarPedido() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, pedido.getFechaEnvio().toString(), "Producto actualizado correctamente"));
         String navegacion = "visualizarPedidosAsignados.xhtml";
         if(estado.equalsIgnoreCase("Recibido")) {
             pedido.setEmpleado(null);
-        } else if(estado.equalsIgnoreCase("Enviado")) {
-            LocalDateTime ld = LocalDateTime.now();
-            pedido.setFechaEnvio(new Date(ld.getYear()-1900, ld.getMonthValue()-1, ld.getDayOfMonth(), ld.getHour(), ld.getMinute(), ld.getSecond()));
-        }
+            pedido.setFechaEnvio(null);
+        } else if(estado.equalsIgnoreCase("En preparación")) {
+            Usuario empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            pedido.setEmpleado(empleado.getPersona());
+            pedido.setFechaEnvio(null);
+        } 
         pedido.setEstadoPedido(estadoPedidoEJB.obtenerEstadoPedidoPorDescripcion(estado));
         try {
             pedidoEJB.edit(pedido);
@@ -95,17 +103,30 @@ public class EditarPedidoController implements Serializable {
         return navegacion;
     }
     
+    public String volverAtras() {
+        return "visualizarPedidosAsignados.xhtml";
+    }
+    
     public List<Producto> obtenerProductosPedido(int idPedido) {
         List<Producto> productos = new ArrayList<>();
         List<ProductoPedido> pp = productoPedidoEJB.obtenerProductosPedidosPorPedido(idPedido);
         for(ProductoPedido ppActual : pp) {
             Producto p = productoEJB.obtenerProductoPorID(ppActual.getProducto().getIdProducto());
             p.setCantidad(ppActual.getCantidad());
-            productos.add(p);        
+            productos.add(p);    
+            totalPagar += p.getCantidad()*p.getPrecio()*(p.getIva()+100)/100;
         }
         return productos;
     }
 
+    public double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public void setTotalPagar(double totalPagar) {
+        this.totalPagar = totalPagar;
+    }
+    
     public ListarPedidosController getListPedCon() {
         return listPedCon;
     }

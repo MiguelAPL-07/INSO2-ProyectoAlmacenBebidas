@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -23,7 +24,9 @@
                                  rowsPerPageTemplate="5,10,{ShowAll|'Todos'}">
 
                         <p:column headerText="Fecha de solicitud">
-                            <h:outputText value="#{ped.fechaCreacion}" />
+                            <h:outputText value="#{ped.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="Dirección de envío">

@@ -68,9 +68,12 @@
                         <p:commandButton value="Añadir" 
                                          action="#{editarProductoController.actualizarProducto()}"
                                          update="panel"/>
+                        
+                        <p:commandButton value="Cancelar" 
+                                         action="#{editarProductoController.volverAtras()}" />
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg">
+                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
                         <p:messages id="msg" severity="info, fatal" closable="true" />
                     </p:panelGrid>
                     

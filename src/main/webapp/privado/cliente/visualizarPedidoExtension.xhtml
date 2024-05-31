@@ -6,8 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:outputScript library="js" name="spanishcalendar.js"/>
-    
     <body>
 
         <ui:composition template="./../../WEB-INF/template/plantilla.xhtml">
@@ -17,29 +15,15 @@
                 <h:form id="formPrincipal">
                     
                     <h1>VER PEDIDO</h1>
-                    
-                    <h2>DATOS DEL CLIENTE</h2>
-                    
-                    <p:outputLabel value="DNI: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.dni}" />
-                    
-                    <p:outputLabel value="Nombre completo: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.nombre} #{editarPedidoController.pedido.cliente.apellido1} #{editarPedidoController.pedido.cliente.apellido2}" />
-                    
-                    <p:outputLabel value="Teléfono: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.telefono}" />
-                    
-                    <p:outputLabel value="Correo electrónico: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.correoElectronico}" />
-                    
+
                     <h2>DATOS DE PEDIDO</h2>
                     
-                    <p:outputLabel value="Fecha de solicitud: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}">
+                    <p:outputLabel value="Fecha de solicitud" />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" >
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </p:outputLabel>
                     
-                    <p:outputLabel value="Fecha de envío prevista: " />
+                    <p:outputLabel value="Fecha de envío" />
                     <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </p:outputLabel>
@@ -50,7 +34,7 @@
                     <p:outputLabel value="Ciudad" />
                     <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
                     
-                    <h2>PRODUCTOS</h2>
+                    <h2>PRODUCTOS PEDIDOS</h2>
                     
                     <p:panelGrid id="panelTablaProductos" columns="1" style="display:block; text-align:center">
                     
@@ -89,28 +73,9 @@
                         
                     </p:panelGrid>
                     
-                    <p:outputLabel value="Cambiar estado del pedido" for="estado" />
-                    <p:selectOneMenu id="estado" value="#{editarPedidoController.estado}">
-                        <f:selectItems value="#{editarPedidoController.listaEstados}" />
-                    </p:selectOneMenu>
-                    <p:message for="estado" />
+                    <p:outputLabel value="Total a pagar: #{editarPedidoController.totalPagar}" />
                     
-                    <p:outputLabel value="Selecciona la fecha prevista de envío: " />
-                    
-                    <p:datePicker id="inline" value="#{editarPedidoController.pedido.fechaEnvio}"
-                                  inline="true" showTime="true" timeInput="true" />
-
-                    <p:panelGrid id="panelActualizar" columns="1" style="display:block; text-align:center">
-                        <p:commandButton value="Actualizar pedido" 
-                                         action="#{editarPedidoController.actualizarPedido()}"
-                                         update="panelMsg" />
-                        
-                        <p:commandButton value="Cancelar" 
-                                         action="#{editarPedidoController.volverAtras()}" />
-                        
-                    </p:panelGrid>
-                    
-                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
+                    <p:panelGrid id="panelMsg">
                         <p:messages id="msg" severity="info, fatal" closable="true" />
                     </p:panelGrid>
                     
