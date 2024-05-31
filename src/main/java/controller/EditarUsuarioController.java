@@ -89,6 +89,10 @@ public class EditarUsuarioController implements Serializable {
         //return rutaRelativa;
         return "visualizarUsuarios.xhtml";
     }
+    
+    public String volverInicio() {
+        return "inicio.xhtml";
+    }
 
     public ListarUsuariosController getListUserCon() {
         return listUserCon;
