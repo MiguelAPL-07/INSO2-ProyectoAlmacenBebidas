@@ -27,8 +27,11 @@
 
                         <h2>INTRODUCE LOS DATOS DEL PEDIDO</h2>
 
-                        <p:outputLabel value="Fecha creación del pedido: #{nuevoPedidoController.fechaCreacion}" />
-
+                        <p:outputLabel value="Fecha de solicitud: "/>
+                        <p:outputLabel value="#{nuevoPedidoController.fechaCreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                        
                         <div />
 
                         <p:outputLabel value="Calle" for="calle" />

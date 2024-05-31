@@ -34,11 +34,15 @@
                     
                     <h2>DATOS DE PEDIDO</h2>
                     
-                    <p:outputLabel value="Fecha de solicitud" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" />
+                    <p:outputLabel value="Fecha de solicitud: "/>
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
                     
-                    <p:outputLabel value="Fecha de envío" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}" />
+                    <p:outputLabel value="Fecha de envío prevista: " />
+                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
                     
                     <p:outputLabel value="Dirección completa(calle, numero, codigo postal)" />
                     <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
