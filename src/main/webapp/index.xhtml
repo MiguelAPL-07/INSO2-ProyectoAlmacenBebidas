@@ -11,29 +11,35 @@
         
         <h:form id="loginForm">
             
-            <div id="usuario" style="display:block; text-align:center">
+            <h1 style="display:block; text-align:center">Inicio de sesión</h1>
+            
+            <p:panel id="usuario" styleClass="ui-noborder">
                 
-                <h1>Inicio de sesión</h1>
-                
-                <p:panelGrid columns="2" style="display:block; text-align:center"> 
+                <p:panelGrid columns="1" layout="grid"> 
+                    
                     <p:fieldset legend="Credenciales">
-                        <p:outputLabel value="Usuario" for="user" />
-                        <p:inputText value="#{indexController.usuario.usuario}" 
-                                    id="user" required="true" requiredMessage="Introduce una contrasena" />
-                        <p:message for="user" />
+                        
+                        <p:panelGrid columns="3" style="display:block; text-align:center" layout="grid"> 
+                            <p:outputLabel value="Usuario" for="user" />
+                            <p:inputText value="#{indexController.usuario.usuario}" 
+                                        id="user" required="true" requiredMessage="Introduce una contrasena" />
+                            <p:message for="user" />
 
-                        <p:outputLabel value="Contraseña" for="pass" />
-                        <p:password id="pass" value="#{indexController.usuario.contrasena}"
-                                    required="true" requiredMessage="Introduce una contrasena" />
-                        <p:message for="pass" /> 
+                            <p:outputLabel value="Contraseña" for="pass" />
+                            <p:password id="pass" value="#{indexController.usuario.contrasena}"
+                                        required="true" requiredMessage="Introduce una contrasena" />
+                            <p:message for="pass" /> 
+                        </p:panelGrid>
+                        
                     </p:fieldset>
+                    
                 </p:panelGrid>
                 
                 <p:panelGrid columns="1" style="display:block; text-align:center">
                     <p:commandButton value="Iniciar sesion" update="loginForm" action="#{indexController.verificarUsuario()}" />
                 </p:panelGrid>
                 
-            </div>
+            </p:panel>
             
         </h:form>
             
