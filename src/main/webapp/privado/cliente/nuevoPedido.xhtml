@@ -16,63 +16,91 @@
                     
                     <h1>NUEVO PEDIDO</h1>
                     
-                    <p:panel id="panelPrincipal">
+                    <p:panelGrid id="panelPrincipal" columns="2" layout="grid">
+                        
+                        <p:panel style="display:block; text-align:center">
+                            <h2>INTRODUCE LOS DATOS DEL PEDIDO</h2>
+                        
+                            <p:outputLabel value="Fecha de solicitud: "/>
+                            <p:outputLabel value="#{nuevoPedidoController.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+
+                            <div />
+
+                            <p:panelGrid columns="1" layout="grid">
+
+                                <p:fieldset legend="Dirección de envío">
+
+                                    <p:panelGrid columns="3" layout="grid" >
+                                        
+                                        <p:outputLabel value="Calle" for="calle" />
+                                        <p:inputText value="#{nuevoPedidoController.pedido.calle}" required="true"
+                                                     requiredMessage="Calle es un campo obligatorio"
+                                                     id="calle" />
+                                        <p:message for="calle" />
+
+                                        <p:outputLabel value="Numero de calle" for="numeroCalle" />
+                                        <p:inputText value="#{nuevoPedidoController.pedido.numeroCalle}" required="true"
+                                                     requiredMessage="Numero de calle es un campo obligatorio"
+                                                     id="numeroCalle" />
+                                        <p:message for="numeroCalle" />
+
+                                        <p:outputLabel value="Código postal" for="codigoPostal" />
+                                        <p:inputText value="#{nuevoPedidoController.pedido.codigoPostal}" required="true"
+                                                     requiredMessage="Código postal es un campo obligatorio"
+                                                     id="codigoPostal" />
+                                        <p:message for="codigoPostal" />
+
+                                        <p:outputLabel value="Ciudad" for="ciudad" />
+                                        <p:inputText value="#{nuevoPedidoController.pedido.ciudad}" required="true"
+                                                     requiredMessage="Ciudad es un campo obligatorio"
+                                                     id="ciudad" />
+                                        <p:message for="ciudad" />
+                                        
+                                    </p:panelGrid>
+
+                                </p:fieldset>
+                                
+                            </p:panelGrid>
+                            
+                        </p:panel>
+                        
+                        <p:panel style="display:block; text-align:center">
+                            
+                            <h2>SELECCIONA UN PRODUCTO</h2>
+                            
+                            <p:outputLabel id="prodSeleccion" value="Cantidad disponible: #{nuevoPedidoController.productoSelecionado.cantidad}" />
+                            
+                            <div />
+                            
+                            <p:panelGrid columns="1" layout="grid">
+                            
+                                <p:fieldset legend="Productos disponibles">
+                                    
+                                        <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
+                                            <f:selectItems value="#{nuevoPedidoController.listaDescripcionProductos}" />
+                                            <f:ajax event="change" render="prodSeleccion" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                                            <f:ajax event="change" render="cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
+                                        </p:selectOneMenu>
+                                        <p:message for="productos" />
+                                    
+                                </p:fieldset>
+
+                                <div />
+
+                                <p:fieldset legend="Indica la cantidad">
+                                    <p:inputText value="#{nuevoPedidoController.cantidad}" required="true"
+                                             requiredMessage="Cantidad es un campo obligatorio"
+                                             id="cantidad" />
+                                    <p:message for="cantidad" />
+                                </p:fieldset>
+                                
+                            </p:panelGrid>
+                            
+                        </p:panel>
                     
-                        <h2>INTRODUCE LOS DATOS DEL PEDIDO</h2>
-                        
-                        <p:outputLabel value="Fecha de solicitud: "/>
-                        <p:outputLabel value="#{nuevoPedidoController.fechaCreacion}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
-
-                        <div />
-
-                        <p:outputLabel value="Calle" for="calle" />
-                        <p:inputText value="#{nuevoPedidoController.pedido.calle}" required="true"
-                                     requiredMessage="Calle es un campo obligatorio"
-                                     id="calle" />
-                        <p:message for="calle" />
-
-                        <p:outputLabel value="Numero de calle" for="numeroCalle" />
-                        <p:inputText value="#{nuevoPedidoController.pedido.numeroCalle}" required="true"
-                                     requiredMessage="Numero de calle es un campo obligatorio"
-                                     id="numeroCalle" />
-                        <p:message for="numeroCalle" />
-
-                        <p:outputLabel value="Código postal" for="codigoPostal" />
-                        <p:inputText value="#{nuevoPedidoController.pedido.codigoPostal}" required="true"
-                                     requiredMessage="Código postal es un campo obligatorio"
-                                     id="codigoPostal" />
-                        <p:message for="codigoPostal" />
-
-                        <p:outputLabel value="Ciudad" for="ciudad" />
-                        <p:inputText value="#{nuevoPedidoController.pedido.ciudad}" required="true"
-                                     requiredMessage="Ciudad es un campo obligatorio"
-                                     id="ciudad" />
-                        <p:message for="ciudad" />
-
-
-                        <h2>SELECCIONA UN PRODUCTO</h2>
-
-                        <p:outputLabel value="Productos" for="productos" />
-                        <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
-                            <f:selectItems value="#{nuevoPedidoController.listaDescripcionProductos}" />
-                            <f:ajax event="change" render="prodSeleccion" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
-                            <f:ajax event="change" render="cantidad" listener="#{nuevoPedidoController.actualizarProductoSeleccionado()}" />
-                        </p:selectOneMenu>
-                        <p:message for="productos" />
-
-                        <p:outputLabel id="prodSeleccion" value="Cantidad disponible: #{nuevoPedidoController.productoSelecionado.cantidad}" />
-
-                        <div/>
-                        
-                        <p:outputLabel value="Indica la cantidad: " for="cantidad" />
-                        <p:inputText value="#{nuevoPedidoController.cantidad}" required="true"
-                                     requiredMessage="Cantidad es un campo obligatorio"
-                                     id="cantidad" />
-                        <p:message for="cantidad" />
-                        
-                    </p:panel>
+                    </p:panelGrid>
                     
                     <p:panelGrid id="panel1" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Añadir" 
@@ -80,9 +108,11 @@
                                          update="panelTablaProductos, cantInsufiente, panelPrincipal" />
                     </p:panelGrid>
 
-                    <p:panelGrid id="cantInsufiente">
+                    <p:panelGrid id="cantInsufiente" columns="1" style="display:block; text-align:center">
                         <p:messages id="msg2" severity="info, fatal" closable="true" />
                     </p:panelGrid>
+                    
+                    <h1 style="display:block; text-align:center">PRODUCTOS AÑADIDOS AL PEDIDO</h1>
                     
                     <p:panelGrid id="panelTablaProductos" columns="1" style="display:block; text-align:center">
                     
@@ -130,10 +160,6 @@
                         </p:dataTable>
                         
                     </p:panelGrid>
-                    
-                    <p:panelGrid id="panelTotal" columns="1" style="display:block; text-align:center">
-                        <p:outputLabel value="Total a pagar: #{nuevoPedidoController.totalPagar}" /> 
-                    </p:panelGrid>
 
                     <p:panelGrid id="panelRealizar" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Realizar pedido" 
@@ -143,7 +169,7 @@
                         </p:commandButton>
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg">
+                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
                         <p:messages id="msg" severity="info, fatal" closable="true" />
                     </p:panelGrid>
                     
