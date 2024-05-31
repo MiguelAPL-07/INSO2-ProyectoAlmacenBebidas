@@ -84,10 +84,13 @@
                         </p:fieldset>
                     </p:panelGrid>
 
-                   <p:panelGrid id="panel2" columns="1" style="display:block; text-align:center">
-                        <p:commandButton value="Modificar" 
-                                         action="#{editarUsuarioController.editarUsuario()}"
-                                         update="panel"/>
+                    <p:panelGrid id="panel2" columns="1" style="display:block; text-align:center">
+                        <p:commandButton value="Modificar" update="panelMsg"
+                                         actionListener="#{editarUsuarioController.editarUsuario()}"/>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
                     </p:panelGrid>
                 </h:form>
                 

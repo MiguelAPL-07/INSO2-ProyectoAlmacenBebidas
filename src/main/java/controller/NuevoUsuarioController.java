@@ -61,7 +61,7 @@ public class NuevoUsuarioController implements Serializable {
         }
     }
     
-    public void insertarUsuario(){
+    public String insertarUsuario(){
         usuario.setRol(rolEJB.findByDescripcion(rol));
         usuario.setPersona(persona);
         try {
@@ -71,6 +71,7 @@ public class NuevoUsuarioController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al registrar", "Error al registrar el usuario"));
             System.out.println("Error al insertar el usuario " + e.getMessage());
         }
+        return "visualizarUsuarios.xhtml";
     }
 
     public Usuario getUsuario() {

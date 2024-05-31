@@ -5,6 +5,7 @@
  */
 package controller;
 
+import EJB.PersonaFacadeLocal;
 import EJB.UsuarioFacadeLocal;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +28,9 @@ public class ListarUsuariosController {
     
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
+    
+    @EJB
+    private PersonaFacadeLocal personaEJB;
     
     // Almacena todos los usuarios de la aplicacion
     private List<Usuario> usuariosBD;
@@ -54,6 +58,7 @@ public class ListarUsuariosController {
     
     public void eliminarUsuario(Usuario usuario) {
         try {
+            personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             usuariosBD = usuarioEJB.findAll();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
@@ -65,6 +70,7 @@ public class ListarUsuariosController {
     
     public void eliminarCliente(Usuario usuario) {
         try {
+            personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             clientesBD = usuarioEJB.obtenerUsuariosRol(1);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
@@ -76,6 +82,7 @@ public class ListarUsuariosController {
     
     public void eliminarEmpleado(Usuario usuario) {
         try {
+            personaEJB.remove(usuario.getPersona());
             usuarioEJB.remove(usuario);
             empleadosBD = usuarioEJB.obtenerUsuariosRol(2);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminación correcta", "Usuario eliminado con éxito"));
@@ -91,6 +98,14 @@ public class ListarUsuariosController {
 
     public void setUsuarioEJB(UsuarioFacadeLocal usuarioEJB) {
         this.usuarioEJB = usuarioEJB;
+    }
+
+    public PersonaFacadeLocal getPersonaEJB() {
+        return personaEJB;
+    }
+
+    public void setPersonaEJB(PersonaFacadeLocal personaEJB) {
+        this.personaEJB = personaEJB;
     }
 
     public List<Usuario> getUsuariosBD() {
@@ -116,7 +131,7 @@ public class ListarUsuariosController {
     public void setEmpleadosBD(List<Usuario> empleadosBD) {
         this.empleadosBD = empleadosBD;
     }
-    
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -128,11 +143,12 @@ public class ListarUsuariosController {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.usuarioEJB);
-        hash = 79 * hash + Objects.hashCode(this.usuariosBD);
-        hash = 79 * hash + Objects.hashCode(this.clientesBD);
-        hash = 79 * hash + Objects.hashCode(this.empleadosBD);
-        hash = 79 * hash + Objects.hashCode(this.usuario);
+        hash = 71 * hash + Objects.hashCode(this.usuarioEJB);
+        hash = 71 * hash + Objects.hashCode(this.personaEJB);
+        hash = 71 * hash + Objects.hashCode(this.usuariosBD);
+        hash = 71 * hash + Objects.hashCode(this.clientesBD);
+        hash = 71 * hash + Objects.hashCode(this.empleadosBD);
+        hash = 71 * hash + Objects.hashCode(this.usuario);
         return hash;
     }
 
@@ -151,6 +167,9 @@ public class ListarUsuariosController {
         if (!Objects.equals(this.usuarioEJB, other.usuarioEJB)) {
             return false;
         }
+        if (!Objects.equals(this.personaEJB, other.personaEJB)) {
+            return false;
+        }
         if (!Objects.equals(this.usuariosBD, other.usuariosBD)) {
             return false;
         }
@@ -165,5 +184,5 @@ public class ListarUsuariosController {
         }
         return true;
     }
-
+    
 }

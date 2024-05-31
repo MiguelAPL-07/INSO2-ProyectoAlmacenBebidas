@@ -58,6 +58,7 @@
                         
                         <p:column headerText="Eliminar usuario">
                              <p:commandLink value="Eliminar" 
+                                            update="tablaUsuarios"
                                             actionListener="#{listarUsuariosController.eliminarUsuario(user)}" />
                         </p:column>
 
