@@ -16,13 +16,16 @@
                     
                    <h1>PEDIDOS REALIZADOS POR LOS CLIENTES</h1>
                    
-                    <p:outputLabel value="Filtrar los pedidos por cliente" for="cliente" />
-                    <p:selectOneMenu id="cliente" value="#{listarPedidosController.clienteSeleccionado}"
-                                     onchange="#{listarPedidosController.filtrarPedidosClientes()}">
-                        <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosClientes()}" />
-                        <f:selectItems value="#{listarPedidosController.nombreClientesBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="cliente" />
+                    <p:panel>
+                        <p:fieldset legend="Filtrar los pedidos por cliente">
+                            <p:selectOneMenu id="cliente" value="#{listarPedidosController.clienteSeleccionado}"
+                                            onchange="#{listarPedidosController.filtrarPedidosClientes()}">
+                                <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosClientes()}" />
+                                <f:selectItems value="#{listarPedidosController.nombreClientesBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                    </p:panel>
+
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.pedidosClientes}"
                                  rows="10"
@@ -60,7 +63,7 @@
                         </p:column>
 
                     </p:dataTable>
-                   
+
                 </h:form>
                 
             </ui:define>

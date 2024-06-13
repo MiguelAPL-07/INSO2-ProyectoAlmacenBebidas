@@ -16,13 +16,15 @@
                     
                    <h1>PEDIDOS GESTIONADOS POR LOS EMPLEADOS</h1>
                    
-                    <p:outputLabel value="Filtrar los pedidos por empleado" for="empleado" />
-                    <p:selectOneMenu id="empleado" value="#{listarPedidosController.empleadoSeleccionado}"
-                                     onchange="#{listarPedidosController.filtrarPedidosEmpleados()}">
-                        <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosEmpleados()}" />
-                        <f:selectItems value="#{listarPedidosController.nombreEmpleadosBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="empleado" />
+                    <p:panel>
+                        <p:fieldset legend="Filtrar los pedidos por empleado">
+                            <p:selectOneMenu id="empleado" value="#{listarPedidosController.empleadoSeleccionado}"
+                                            onchange="#{listarPedidosController.filtrarPedidosEmpleados()}">
+                                <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosEmpleados()}" />
+                                <f:selectItems value="#{listarPedidosController.nombreEmpleadosBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                    </p:panel>
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.listaPedidosEmpleados}"
                                  rows="10"
@@ -58,9 +60,7 @@
                         <p:column headerText="Estado del pedido">
                             <h:outputText value="#{ped.estadoPedido.descripcion}"/>
                         </p:column>
-                        
-                        
-                       
+
                     </p:dataTable>
                    
                 </h:form>
