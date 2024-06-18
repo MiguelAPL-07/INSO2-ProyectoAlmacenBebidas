@@ -31,4 +31,6 @@ public interface PersonaFacadeLocal {
     int count();
     
     Persona obtenerPersonaPorDNI(String dni);
+    
+    Persona obtenerPersonaPorID(int id);
 }

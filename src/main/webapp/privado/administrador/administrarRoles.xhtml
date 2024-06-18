@@ -50,9 +50,12 @@
 
                     </p:dataTable>
                     
-                    <p:commandButton value="Nuevo rol" oncomplete="PF('wdialogo').show();"
+                    <p:panelGrid columns="1" style="display:block; text-align:center">
+                        <p:commandButton value="Nuevo rol" oncomplete="PF('wdialogo').show();"
                                      actionListener="#{administrarRolesController.establecerRolInsertar()}"
-                                     update=":formDialogo:dialogo" />
+                                     update=":formDialogo:dialogo"/>
+                    </p:panelGrid>
+                   
                                         
                 </h:form>
                         
