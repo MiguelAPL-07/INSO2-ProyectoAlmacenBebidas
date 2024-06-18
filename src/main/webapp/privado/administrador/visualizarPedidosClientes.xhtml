@@ -12,17 +12,29 @@
 
             <ui:define name="content">
                 
-                <h:form>
+                <h:form id="formPrincipal">
                     
                    <h1>PEDIDOS REALIZADOS POR LOS CLIENTES</h1>
                    
-                    <p:outputLabel value="Filtrar los pedidos por cliente" for="cliente" />
-                    <p:selectOneMenu id="cliente" value="#{listarPedidosController.clienteSeleccionado}"
-                                     onchange="#{listarPedidosController.filtrarPedidosClientes()}">
-                        <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosClientes()}" />
-                        <f:selectItems value="#{listarPedidosController.nombreClientesBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="cliente" />
+                   <p:panelGrid columns="2" style="display:block; text-align:center">
+                        <p:fieldset legend="Filtrar los pedidos por cliente">
+                            <p:selectOneMenu id="cliente" value="#{listarPedidosController.clienteSeleccionado}"
+                                            onchange="#{listarPedidosController.filtrarPedidosClientes()}">
+                                <f:ajax event="change" render="formPrincipal" listener="#{listarPedidosController.filtrarPedidosClientes()}" />
+                                <f:selectItems value="#{listarPedidosController.nombreClientesBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                        
+                        <p:fieldset legend="Datos del cliente seleccionado">
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="Nombre completo: #{listarPedidosController.cliente.nombre} #{listarPedidosController.cliente.apellido1} #{listarPedidosController.cliente.apellido2}" />
+                                <p:outputLabel value="DNI: #{listarPedidosController.cliente.dni}" />
+                                <p:outputLabel value="Correo electrónico: #{listarPedidosController.cliente.correoElectronico}" />
+                                <p:outputLabel value="Teléfono: #{listarPedidosController.cliente.telefono}" />
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panelGrid>
+
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.pedidosClientes}"
                                  rows="10"
@@ -60,7 +72,7 @@
                         </p:column>
 
                     </p:dataTable>
-                   
+
                 </h:form>
                 
             </ui:define>

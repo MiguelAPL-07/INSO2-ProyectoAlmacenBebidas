@@ -12,17 +12,28 @@
 
             <ui:define name="content">
                 
-                <h:form>
+                <h:form id="formPrincipal">
                     
                    <h1>PEDIDOS GESTIONADOS POR LOS EMPLEADOS</h1>
                    
-                    <p:outputLabel value="Filtrar los pedidos por empleado" for="empleado" />
-                    <p:selectOneMenu id="empleado" value="#{listarPedidosController.empleadoSeleccionado}"
-                                     onchange="#{listarPedidosController.filtrarPedidosEmpleados()}">
-                        <f:ajax event="change" render="tablaPedidos" listener="#{listarPedidosController.filtrarPedidosEmpleados()}" />
-                        <f:selectItems value="#{listarPedidosController.nombreEmpleadosBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="empleado" />
+                    <p:panelGrid columns="2" style="display:block; text-align:center">
+                        <p:fieldset legend="Filtrar los pedidos por empleado">
+                            <p:selectOneMenu id="empleado" value="#{listarPedidosController.empleadoSeleccionado}"
+                                            onchange="#{listarPedidosController.filtrarPedidosEmpleados()}">
+                                <f:ajax event="change" render="formPrincipal" listener="#{listarPedidosController.filtrarPedidosEmpleados()}" />
+                                <f:selectItems value="#{listarPedidosController.nombreEmpleadosBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                        
+                        <p:fieldset legend="Datos del empleado seleccionado">
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="Nombre completo: #{listarPedidosController.empleado.nombre} #{listarPedidosController.empleado.apellido1} #{listarPedidosController.empleado.apellido2}" />
+                                <p:outputLabel value="DNI: #{listarPedidosController.empleado.dni}" />
+                                <p:outputLabel value="Correo electrónico: #{listarPedidosController.empleado.correoElectronico}" />
+                                <p:outputLabel value="Teléfono: #{listarPedidosController.empleado.telefono}" />
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panelGrid>
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.listaPedidosEmpleados}"
                                  rows="10"
@@ -58,9 +69,7 @@
                         <p:column headerText="Estado del pedido">
                             <h:outputText value="#{ped.estadoPedido.descripcion}"/>
                         </p:column>
-                        
-                        
-                       
+
                     </p:dataTable>
                    
                 </h:form>
