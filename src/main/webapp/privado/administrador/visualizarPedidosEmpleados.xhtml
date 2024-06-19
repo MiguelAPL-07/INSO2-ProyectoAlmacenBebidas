@@ -16,7 +16,8 @@
                     
                    <h1>PEDIDOS GESTIONADOS POR LOS EMPLEADOS</h1>
                    
-                    <p:panelGrid columns="2" style="display:block; text-align:center">
+                    <p:panelGrid columns="1" style="display:block; text-align:center">
+                        
                         <p:fieldset legend="Filtrar los pedidos por empleado">
                             <p:selectOneMenu id="empleado" value="#{listarPedidosController.empleadoSeleccionado}"
                                             onchange="#{listarPedidosController.filtrarPedidosEmpleados()}">
@@ -26,13 +27,29 @@
                         </p:fieldset>
                         
                         <p:fieldset legend="Datos del empleado seleccionado">
-                            <p:panelGrid columns="2" >
-                                <p:outputLabel value="Nombre completo: #{listarPedidosController.empleado.nombre} #{listarPedidosController.empleado.apellido1} #{listarPedidosController.empleado.apellido2}" />
-                                <p:outputLabel value="DNI: #{listarPedidosController.empleado.dni}" />
-                                <p:outputLabel value="Correo electrónico: #{listarPedidosController.empleado.correoElectronico}" />
-                                <p:outputLabel value="Teléfono: #{listarPedidosController.empleado.telefono}" />
+                            
+                            <p:panelGrid columns="4" >
+                                
+                                <p:panel header="Nombre completo">
+                                    <p:outputLabel value="#{listarPedidosController.empleado.nombre} #{listarPedidosController.empleado.apellido1} #{listarPedidosController.empleado.apellido2}" />
+                                </p:panel>
+                                
+                                <p:panel header="DNI">
+                                    <p:outputLabel value="#{listarPedidosController.empleado.dni}" />
+                                </p:panel>
+                                
+                                <p:panel header="Correo electrónico">
+                                    <p:outputLabel value="#{listarPedidosController.empleado.correoElectronico}" />
+                                </p:panel>
+                                
+                                <p:panel header="Teléfono">
+                                    <p:outputLabel value="#{listarPedidosController.empleado.telefono}" />
+                                </p:panel>
+                                
                             </p:panelGrid>
+                            
                         </p:fieldset>
+                        
                     </p:panelGrid>
                    
                     <p:dataTable id="tablaPedidos" var="ped" value="#{listarPedidosController.listaPedidosEmpleados}"
