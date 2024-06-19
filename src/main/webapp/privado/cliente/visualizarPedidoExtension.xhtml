@@ -16,27 +16,35 @@
                     
                     <h1>VER PEDIDO</h1>
 
-                    <h2>DATOS DE PEDIDO</h2>
+                    <h2 style="display:block; text-align:center">DATOS DEL PEDIDO</h2>
                     
-                    <p:outputLabel value="Fecha de solicitud" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" >
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </p:outputLabel>
+                    <p:panelGrid columns="4">
+
+                        <p:panel header="Fecha de solicitud">
+                            <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:panel>
+                        
+                        <p:panel header="Fecha de envío">
+                            <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:panel>
+                        
+                        <p:panel header="Dirección completa">
+                            <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
+                        </p:panel>
+                        
+                        <p:panel header="Ciudad">
+                            <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
+                        </p:panel>
+
+                    </p:panelGrid>
+
+                    <h2 style="display:block; text-align:center">PRODUCTOS PEDIDOS</h2>
                     
-                    <p:outputLabel value="Fecha de envío" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </p:outputLabel>
-                    
-                    <p:outputLabel value="Dirección completa(calle, numero, codigo postal)" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
-                    
-                    <p:outputLabel value="Ciudad" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
-                    
-                    <h2>PRODUCTOS PEDIDOS</h2>
-                    
-                    <p:panelGrid id="panelTablaProductos" columns="1" style="display:block; text-align:center">
+                    <p:panelGrid id="panelTablaProductos" columns="1">
                     
                         <p:dataTable id="tablaProductos" var="prod" value="#{editarPedidoController.listaProductos}"
                                      rows="10"
@@ -73,7 +81,11 @@
                         
                     </p:panelGrid>
                     
-                    <p:outputLabel value="Total a pagar: #{editarPedidoController.totalPagar}" />
+                    <p:panel>
+                        <h2 style="display:block; text-align:center">
+                            <p:outputLabel value="Total a pagar: #{editarPedidoController.totalPagar}" />
+                        </h2> 
+                    </p:panel>
                     
                     <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
                         <p:messages id="msg" severity="info, fatal" closable="true" />

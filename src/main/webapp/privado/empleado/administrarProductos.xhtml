@@ -14,18 +14,18 @@
                 
                 <h:form>
                     
-                   <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
+                    <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
                    
-                   <p:outputLabel value="Filtrar los productos por categoria de producto" for="categoria" />
-                   <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
-                                    onchange="#{listarProductosController.filtrarProductosPorCategoria()}"
-                                    >
-                       <f:ajax event="change" render="tablaProductos" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
-                       <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="categoria" />
-                   
-                   
+                    <p:panel>
+                        <p:fieldset legend="Filtrar los productos por categoria">
+                            <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
+                                    onchange="#{listarProductosController.filtrarProductosPorCategoria()}">
+                                <f:ajax event="change" render="tablaProductos" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
+                                <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
+                    </p:panel>
+ 
                     <p:dataTable id="tablaProductos" var="prod" value="#{listarProductosController.productosBD}"
                                  rows="10"
                                  paginator="true" paginatorPosition="both"

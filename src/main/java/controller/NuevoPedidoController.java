@@ -170,9 +170,7 @@ public class NuevoPedidoController implements Serializable {
             pp.setProducto(productoEJB.obtenerProductoPorNombre(pActual.getNombre()));
             try {
                 productoPedidoEJB.create(pp);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha guardado el producto en la lista", "Se ha guardado el producto en la lista"));
             } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha guardado el producto en la lista", "No se ha guardado el producto en la lista"));
                 System.out.println("Error al insertar el usuario " + e.getMessage());
             }
         }
@@ -183,9 +181,7 @@ public class NuevoPedidoController implements Serializable {
         p.setCantidad(p.getCantidad() - cantidad);
         try {
             productoEJB.edit(p);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cantidad actualizada correctamente", "Cantidad actualizada correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "No se ha actualizado la cantidad", "No se ha actualizado la cantidad"));
             System.out.println("Error al insertar la publicación " + e.getMessage());
         }
     }
