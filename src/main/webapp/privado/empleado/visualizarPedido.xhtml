@@ -20,35 +20,51 @@
                     
                     <h2>DATOS DEL CLIENTE</h2>
                     
-                    <p:outputLabel value="DNI: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.dni}" />
+                    <p:panelGrid columns="4">
+                        
+                        <p:panel header="DNI">
+                            <p:outputLabel value="#{editarPedidoController.pedido.cliente.dni}" />
+                        </p:panel>
+
+                        <p:panel header="Nombre completo">
+                            <p:outputLabel value="#{editarPedidoController.pedido.cliente.nombre} #{editarPedidoController.pedido.cliente.apellido1} #{editarPedidoController.pedido.cliente.apellido2}" />
+                        </p:panel>
+
+                        <p:panel header="Teléfono">
+                            <p:outputLabel value="#{editarPedidoController.pedido.cliente.telefono}" />
+                        </p:panel>
+
+                        <p:panel header="Correo eletrónico">
+                            <p:outputLabel value="#{editarPedidoController.pedido.cliente.correoElectronico}" />
+                        </p:panel>
                     
-                    <p:outputLabel value="Nombre completo: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.nombre} #{editarPedidoController.pedido.cliente.apellido1} #{editarPedidoController.pedido.cliente.apellido2}" />
+                    </p:panelGrid>
+                        
+                    <h2>DATOS DEL PEDIDO</h2>
                     
-                    <p:outputLabel value="Teléfono: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.telefono}" />
+                    <p:panelGrid columns="4">
                     
-                    <p:outputLabel value="Correo electrónico: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.cliente.correoElectronico}" />
-                    
-                    <h2>DATOS DE PEDIDO</h2>
-                    
-                    <p:outputLabel value="Fecha de solicitud: "/>
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </p:outputLabel>
-                    
-                    <p:outputLabel value="Fecha de envío prevista: " />
-                    <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </p:outputLabel>
-                    
-                    <p:outputLabel value="Dirección completa(calle, numero, codigo postal)" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
-                    
-                    <p:outputLabel value="Ciudad" />
-                    <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
+                        <p:panel header="Fecha de solicitud">
+                            <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:panel>
+
+                        <p:panel header="Fecha envío prevista">
+                            <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:panel>
+
+                        <p:panel header="Dirección completa">
+                            <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
+                        </p:panel>
+
+                        <p:panel header="Ciudad">
+                            <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
+                        </p:panel>
+                        
+                    </p:panelGrid>
                     
                     <h2>PRODUCTOS</h2>
                     
@@ -89,17 +105,21 @@
                         
                     </p:panelGrid>
                     
-                    <p:outputLabel value="Cambiar estado del pedido" for="estado" />
-                    <p:selectOneMenu id="estado" value="#{editarPedidoController.estado}">
-                        <f:selectItems value="#{editarPedidoController.listaEstados}" />
-                    </p:selectOneMenu>
-                    <p:message for="estado" />
+                    <h2>MODIFICAR CAMBIOS EN EL PEDIDO</h2>
                     
-                    <p:outputLabel value="Selecciona la fecha prevista de envío: " />
-                    
-                    <p:datePicker id="inline" value="#{editarPedidoController.pedido.fechaEnvio}"
-                                  inline="true" showTime="true" timeInput="true" />
+                    <p:panelGrid columns="2" style="display:block; text-align:center">
+                        <p:fieldset legend="Cambiar estado del pedido">
+                            <p:selectOneMenu id="estado" value="#{editarPedidoController.estado}">
+                                <f:selectItems value="#{editarPedidoController.listaEstados}" />
+                            </p:selectOneMenu>
+                        </p:fieldset>
 
+                        <p:fieldset legend="Selecciona la fecha prevista de envío">
+                            <p:datePicker id="inline" value="#{editarPedidoController.pedido.fechaEnvio}"
+                                      inline="true" showTime="true" timeInput="true" />
+                        </p:fieldset>
+                    </p:panelGrid>
+                    
                     <p:panelGrid id="panelActualizar" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Actualizar pedido" 
                                          action="#{editarPedidoController.actualizarPedido()}"
@@ -110,9 +130,9 @@
                         
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
+                    <p:growl id="panelMsg">
                         <p:messages id="msg" severity="info, fatal" closable="true" />
-                    </p:panelGrid>
+                    </p:growl>
                     
                 </h:form>
                 
