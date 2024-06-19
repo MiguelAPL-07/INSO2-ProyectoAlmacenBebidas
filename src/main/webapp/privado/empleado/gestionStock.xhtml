@@ -61,25 +61,29 @@
                         
                     </p:dataTable>
                     
-                    <p:panelGrid columns="1" rendered="#{not empty listarProductosController.producto}">
-
-                        <p:panelGrid columns="1" style="display:block; text-align:center">
-
-                            <p:outputLabel value="Agregar stock" />
-
-                        </p:panelGrid>  
+                    <h2>AGREGAR STOCK</h2>
+                    
+                    <p:panelGrid columns="1" rendered="#{not empty listarProductosController.producto}" style="display:block; text-align:center">
                         
-                        <p:panelGrid columns="2" style="display:block; text-align:center">
+                        <p:fieldset legend="Producto seleccionado">
                             
-                            <p:outputLabel value="Producto: #{listarProductosController.producto.nombre}"/>
+                            <p:panelGrid columns="3">
+                                
+                                <p:panel header="Producto">
+                                    <p:outputLabel value="#{listarProductosController.producto.nombre}"/>
+                                </p:panel>
+                                
+                                <p:panel header="Cantidad disponible">
+                                    <p:outputLabel value="#{listarProductosController.producto.cantidad}"/>
+                                </p:panel>
+                                
+                                <p:panel header="Introduce la cantidad">
+                                    <p:inputNumber value="#{listarProductosController.cantidad}"/>
+                                </p:panel>
+                                
+                            </p:panelGrid>
                             
-                            <p:outputLabel value="Cantidad disponible: #{listarProductosController.producto.cantidad}"/>
-
-                            <p:outputLabel value="Numero de productos a agregar: " />
-                            
-                            <p:inputNumber value="#{listarProductosController.cantidad}"/>
-
-                        </p:panelGrid>    
+                        </p:fieldset> 
                         
                     </p:panelGrid>
                     
