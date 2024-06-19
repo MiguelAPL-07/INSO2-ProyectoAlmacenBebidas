@@ -46,9 +46,9 @@ public class ListarPedidosController {
     private PersonaFacadeLocal personaEJB;
     
     @EJB
-
     private UsuarioFacadeLocal usuarioEJB;
   
+    @EJB
     private ProductoFacadeLocal productoEJB;
     
     @EJB
@@ -86,6 +86,10 @@ public class ListarPedidosController {
     private int totalProductos;
     
     private int cantidadTotal;
+    
+    private Persona cliente;
+    
+    private Persona empleado;
     
     @PostConstruct
     public void init() {
@@ -126,21 +130,28 @@ public class ListarPedidosController {
             nombreClientesBD.add(uActual.getPersona().getIdPersona() + " " + uActual.getPersona().getNombre() + " " + uActual.getPersona().getApellido1());
         }
         clienteSeleccionado = "Todos";
+        
+        cliente = new Persona();
+        empleado = new Persona();
     }
     
     public void filtrarPedidosEmpleados() {
         if(empleadoSeleccionado.equalsIgnoreCase("Todos")) {
             listaPedidosEmpleados = pedidoEJB.findAll();
+            empleado = new Persona();
         } else {
             listaPedidosEmpleados = pedidoEJB.obtenerPedidosPorEmpleado(Integer.parseInt(empleadoSeleccionado.split(" ")[0]));
+            empleado = personaEJB.obtenerPersonaPorID(Integer.parseInt(empleadoSeleccionado.split(" ")[0]));
         }
     }
     
     public void filtrarPedidosClientes() {
         if(clienteSeleccionado.equalsIgnoreCase("Todos")) {
             pedidosClientes = pedidoEJB.findAll();
+            cliente = new Persona();
         } else {
             pedidosClientes = pedidoEJB.obtenerPedidosPorCliente(Integer.parseInt(clienteSeleccionado.split(" ")[0]));
+            cliente = personaEJB.obtenerPersonaPorID(Integer.parseInt(clienteSeleccionado.split(" ")[0]));
         }
         listaProductos = new ArrayList<>();
     }
@@ -182,6 +193,24 @@ public class ListarPedidosController {
         }
         pedido = null;
     }
+
+    public Persona getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Persona cliente) {
+        this.cliente = cliente;
+    }
+
+    public Persona getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Persona empleado) {
+        this.empleado = empleado;
+    }
+    
+    
 
     public UsuarioFacadeLocal getUsuarioEJB() {
         return usuarioEJB;

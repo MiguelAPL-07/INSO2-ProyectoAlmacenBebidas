@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
     private String contrasena;
     
     @Column(name="ultimaConexion")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ultimaConexion;
     
     @Column(name="estado")

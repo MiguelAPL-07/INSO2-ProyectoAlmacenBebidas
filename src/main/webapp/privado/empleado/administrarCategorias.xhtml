@@ -20,25 +20,25 @@
                                  rows="10"
                                  paginator="true" paginatorPosition="both"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} categorias"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} categorías"
                                  rowsPerPageTemplate="5,10,{ShowAll|'Todas'}">
                      
                         <p:column headerText="Identificador">
                             <h:outputText value="#{categoria.idCategoria}" />
                         </p:column>
 
-                        <p:column headerText="Nombre de la categoria">
+                        <p:column headerText="Nombre de la categoría">
                             <h:outputText value="#{categoria.nombreCategoria}" />
                         </p:column>
 
-                        <p:column headerText="Modificar Categoria">
+                        <p:column headerText="Modificar categoría">
                             <p:commandLink value="Modificar" 
                                            update=":formDialogo:dialogo"
                                            oncomplete="PF('wdialogo').show();"
                                            actionListener="#{administrarCategoriasController.establecerCategoriaModificar(categoria)}" />
                         </p:column>
                         
-                        <p:column headerText="Eliminar Categoria">
+                        <p:column headerText="Eliminar categoría">
                              <p:commandLink value="Eliminar" 
                                            update=":formDialogo:dialogo"
                                            oncomplete="PF('wdialogo').show();"
@@ -46,12 +46,14 @@
                         </p:column>
 
                     </p:dataTable>
-                    
-                    <p:commandButton value="Nuevo" oncomplete="PF('wdialogo').show();"
+
+                    <p:panelGrid columns="1" style="display:block; text-align:center">
+                        <p:commandButton value="Nueva categoría" oncomplete="PF('wdialogo').show();"
                                      actionListener="#{administrarCategoriasController.establecerCategoriaInsertar()}"
-                                     update=":formDialogo:dialogo">
-                        <i class="pi pi-plus-circle" style="font-size: 3em" />
-                    </p:commandButton>
+                                     update=":formDialogo:dialogo" />
+                    </p:panelGrid>
+                    
+                    <p:growl id="panelMsg" />
                     
                 </h:form>
                         
@@ -59,11 +61,11 @@
                     
                     <p:dialog id="dialogo" widgetVar="wdialogo" modal="true"
                               closeOnEscape="true" draggable="false"
-                              resizable="false" header="Categorias de la aplicacion">
+                              resizable="false" header="Categorías de la aplicación">
                         
                         <p:panelGrid columns="2">
                             
-                            <p:outputLabel value="Nombre de la categoria" />
+                            <p:outputLabel value="Nombre de la categoría" />
                             <p:inputText value="#{administrarCategoriasController.categoria.nombreCategoria}"
                                          rendered="#{administrarCategoriasController.accion == 'I' || administrarCategoriasController.accion == 'M'}"/>
                             <p:outputLabel value="#{administrarCategoriasController.categoria.nombreCategoria}" 
@@ -86,7 +88,7 @@
                         </p:panelGrid>          
                         
                     </p:dialog>
-
+                    
                 </h:form>
                 
             </ui:define>

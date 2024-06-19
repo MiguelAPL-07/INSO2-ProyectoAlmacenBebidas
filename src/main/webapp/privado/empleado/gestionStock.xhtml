@@ -14,16 +14,17 @@
                 
                 <h:form id="formPrincipal">
                     
-                   <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
+                    <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
                    
-                   <p:outputLabel value="Filtrar los productos por categoria de producto" for="categoria" />
-                   <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
-                                    onchange="#{listarProductosController.filtrarProductosPorCategoria()}"
-                                    >
-                       <f:ajax event="change" render=":formPrincipal" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
-                       <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
-                    </p:selectOneMenu>
-                    <p:message for="categoria" />
+                    <p:panel>
+                       <p:fieldset legend="Filtrar los productos por categoria">
+                            <p:selectOneMenu id="categoria" value="#{listarProductosController.categoriaSeleccionada}"
+                                     onchange="#{listarProductosController.filtrarProductosPorCategoria()}">
+                                <f:ajax event="change" render=":formPrincipal" listener="#{listarProductosController.filtrarProductosPorCategoria()}" />
+                                <f:selectItems value="#{listarProductosController.nombreCategoriasBD}" />
+                            </p:selectOneMenu>
+                       </p:fieldset>
+                    </p:panel>
                    
                     <p:dataTable id="tablaProductos" var="prod" value="#{listarProductosController.productosBD}"
                                  rows="10"
@@ -60,25 +61,29 @@
                         
                     </p:dataTable>
                     
-                    <p:panelGrid columns="1" rendered="#{not empty listarProductosController.producto}">
-
-                        <p:panelGrid columns="1" style="display:block; text-align:center">
-
-                            <p:outputLabel value="Agregar stock" />
-
-                        </p:panelGrid>  
+                    <h2>AGREGAR STOCK</h2>
+                    
+                    <p:panelGrid columns="1" rendered="#{not empty listarProductosController.producto}" style="display:block; text-align:center">
                         
-                        <p:panelGrid columns="2" style="display:block; text-align:center">
+                        <p:fieldset legend="Producto seleccionado">
                             
-                            <p:outputLabel value="Producto: #{listarProductosController.producto.nombre}"/>
+                            <p:panelGrid columns="3">
+                                
+                                <p:panel header="Producto">
+                                    <p:outputLabel value="#{listarProductosController.producto.nombre}"/>
+                                </p:panel>
+                                
+                                <p:panel header="Cantidad disponible">
+                                    <p:outputLabel value="#{listarProductosController.producto.cantidad}"/>
+                                </p:panel>
+                                
+                                <p:panel header="Introduce la cantidad">
+                                    <p:inputNumber value="#{listarProductosController.cantidad}"/>
+                                </p:panel>
+                                
+                            </p:panelGrid>
                             
-                            <p:outputLabel value="Cantidad disponible: #{listarProductosController.producto.cantidad}"/>
-
-                            <p:outputLabel value="Numero de productos a agregar" />
-                            
-                            <p:inputNumber value="#{listarProductosController.cantidad}"/>
-
-                        </p:panelGrid>    
+                        </p:fieldset> 
                         
                     </p:panelGrid>
                     
@@ -94,14 +99,12 @@
                         
                         <p:commandButton value="Agregar" 
                                          action="#{listarProductosController.agregarStock()}"
-                                         update=":formPrincipal" >
+                                         update="formPrincipal" >
                         </p:commandButton>
                         
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg">
-                            <p:messages id="msg" severity="info, fatal" closable="true" />
-                        </p:panelGrid>
+                    <p:growl id="panelMsg" />
  
                 </h:form>
                 

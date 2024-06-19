@@ -6,8 +6,11 @@
 package controller;
 
 import EJB.MenuFacadeLocal;
+import EJB.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
@@ -37,6 +40,9 @@ public class MenuController implements Serializable {
     private MenuModel modelo;
     
     private String usuario;
+    
+    @EJB
+    private UsuarioFacadeLocal usuarioEJB;
     
     @PostConstruct
     public void init() {
@@ -84,6 +90,12 @@ public class MenuController implements Serializable {
     
     public void destrurirSesionActual() {
         try {
+            Usuario usuarioActual = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            LocalDateTime ld = LocalDateTime.now();
+            Date fecha = new Date(ld.getYear()-1900, ld.getMonthValue()-1, ld.getDayOfMonth(), ld.getHour(), ld.getMinute(), ld.getSecond());
+            usuarioActual.setUltimaConexion(fecha);
+            usuarioEJB.edit(usuarioActual);
+            
             // Se destruye la sesion del usuario
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath() + "/faces/index.xhtml");

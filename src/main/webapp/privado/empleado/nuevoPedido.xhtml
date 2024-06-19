@@ -30,14 +30,14 @@
                         <p:panel style="display:block; text-align:center">
                             <h2>INTRODUCE LOS DATOS DEL PEDIDO</h2>
                         
-                            <p:outputLabel value="Fecha de solicitud: "/>
-                            <p:outputLabel value="#{nuevoPedidoController.fechaCreacion}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </p:outputLabel>
-
-                            <div />
-
                             <p:panelGrid columns="1" layout="grid">
+                                
+                                <p:fieldset legend="Fecha de solicitud">
+                                    <p:outputLabel value="#{nuevoPedidoController.fechaCreacion}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                </p:fieldset>
+                                
 
                                 <p:fieldset legend="Dirección de envío">
 
@@ -79,12 +79,8 @@
                             
                             <h2>SELECCIONA UN PRODUCTO</h2>
                             
-                            <p:outputLabel id="prodSeleccion" value="Cantidad disponible: #{nuevoPedidoController.productoSelecionado.cantidad}" />
-                            
-                            <div />
-                            
-                            <p:panelGrid columns="1" layout="grid">
-                            
+                            <p:panelGrid columns="1" layout="grid" style="display:block; text-align:center">
+                                
                                 <p:fieldset legend="Productos disponibles">
                                     
                                         <p:selectOneMenu id="productos" value="#{nuevoPedidoController.producto}">
@@ -94,6 +90,12 @@
                                         </p:selectOneMenu>
                                         <p:message for="productos" />
                                     
+                                </p:fieldset>
+                                
+                                <div />
+                                
+                                <p:fieldset legend="Cantidad disponible">
+                                    <p:outputLabel id="prodSeleccion" value="#{nuevoPedidoController.productoSelecionado.cantidad}" />
                                 </p:fieldset>
 
                                 <div />
@@ -112,7 +114,7 @@
                     </p:panelGrid>
                     
                     <p:panelGrid id="panel1" columns="1" style="display:block; text-align:center">
-                        <p:commandButton value="Añadir" 
+                        <p:commandButton value="Añadir al pedido" 
                                          actionListener="#{nuevoPedidoController.agregarProductoLista()}"
                                          update="panelTablaProductos, cantInsufiente, panelPrincipal" />
                     </p:panelGrid>
@@ -173,14 +175,12 @@
                     <p:panelGrid id="panelRealizar" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Realizar pedido" 
                                          action="#{nuevoPedidoController.realizarPedido()}"
-                                         update=":formPrincipal">
+                                         update="formPrincipal">
                             
                         </p:commandButton>
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
-                        <p:messages id="msg" severity="info, fatal" closable="true" />
-                    </p:panelGrid>
+                    <p:growl id="panelMsg" />
                     
                 </h:form>
                   
