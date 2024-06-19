@@ -16,31 +16,27 @@
                     
                     <h1>VER PEDIDO</h1>
 
-                    <h2 style="display:block; text-align:center">DATOS DE PEDIDO</h2>
+                    <h2 style="display:block; text-align:center">DATOS DEL PEDIDO</h2>
                     
-                    <p:panelGrid columns="2" layout="grid">
-                        
-                        <p:panel style="display:block; text-align:center">
-                            <p:outputLabel value="Fecha de solicitud:  " />
+                    <p:panelGrid columns="4">
+
+                        <p:panel header="Fecha de solicitud">
                             <p:outputLabel value="#{editarPedidoController.pedido.fechaCreacion}" >
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:outputLabel>
                         </p:panel>
                         
-                        <p:panel style="display:block; text-align:center">
-                            <p:outputLabel value="Fecha de envío:  " />
+                        <p:panel header="Fecha de envío">
                             <p:outputLabel value="#{editarPedidoController.pedido.fechaEnvio}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:outputLabel>
                         </p:panel>
                         
-                        <p:panel style="display:block; text-align:center">
-                            <p:outputLabel value="Dirección completa(calle, numero, codigo postal):  " />
+                        <p:panel header="Dirección completa">
                             <p:outputLabel value="#{editarPedidoController.pedido.calle}, #{editarPedidoController.pedido.numeroCalle}, #{editarPedidoController.pedido.codigoPostal}"/>
                         </p:panel>
                         
-                        <p:panel style="display:block; text-align:center">
-                            <p:outputLabel value="Ciudad:  " />
+                        <p:panel header="Ciudad">
                             <p:outputLabel value="#{editarPedidoController.pedido.ciudad}" />
                         </p:panel>
 
