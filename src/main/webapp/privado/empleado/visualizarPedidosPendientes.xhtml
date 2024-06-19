@@ -63,33 +63,42 @@
 
                     </p:dataTable>
                    
-                    <p:panelGrid columns="1" rendered="#{not empty listarPedidosController.pedido}">
-
-                        <p:panelGrid columns="1" style="display:block; text-align:center">
-
-                            <p:outputLabel value="Pedido seleccionado" />
-
-                        </p:panelGrid>  
+                    <p:panelGrid columns="1" rendered="#{not empty listarPedidosController.pedido}" style="display:block; text-align:center">
                         
-                        <p:panelGrid columns="4">
-
-                            <p:outputLabel value="ID pedido: #{listarPedidosController.pedido.idPedido}" />
-
-                            <p:outputLabel value="Dirección de envío: #{listarPedidosController.pedido.calle}, #{listarPedidosController.pedido.numeroCalle}, #{listarPedidosController.pedido.codigoPostal}" />
-
-                            <p:outputLabel value="Ciudad: #{listarPedidosController.pedido.ciudad}" />
-
-                            <p:outputLabel value="Cliente: #{listarPedidosController.pedido.cliente.nombre} #{listarPedidosController.pedido.cliente.apellido1} #{listarPedidosController.pedido.cliente.apellido2}" />
+                        <p:fieldset legend="Pedido seleccionado">
                             
-                            <p:outputLabel value="Total productos: #{listarPedidosController.totalProductos}" />
-                            
-                            <p:outputLabel value="Cantidad total solicitada: #{listarPedidosController.cantidadTotal}" />
+                            <p:panelGrid columns="3">
+                                
+                                <p:panel header="ID pedido">
+                                    <p:outputLabel value="#{listarPedidosController.pedido.idPedido}" />
+                                </p:panel>
 
-                        </p:panelGrid>          
+                                <p:panel header="Dirección de envío">
+                                    <p:outputLabel value="#{listarPedidosController.pedido.calle}, #{listarPedidosController.pedido.numeroCalle}, #{listarPedidosController.pedido.codigoPostal}" />
+                                </p:panel>
 
+                                <p:panel header="Ciudad">
+                                    <p:outputLabel value="#{listarPedidosController.pedido.ciudad}" />
+                                </p:panel>
+
+                                <p:panel header="Nombre del cliente">
+                                    <p:outputLabel value="#{listarPedidosController.pedido.cliente.nombre} #{listarPedidosController.pedido.cliente.apellido1} #{listarPedidosController.pedido.cliente.apellido2}" /> 
+                                </p:panel>
+
+                                <p:panel header="Total productos">
+                                    <p:outputLabel value="#{listarPedidosController.totalProductos}" />
+                                </p:panel>
+                                
+                                <p:panel header="Cantidad total solicitada">
+                                    <p:outputLabel value="#{listarPedidosController.cantidadTotal}" />
+                                </p:panel>
+                                
+                            </p:panelGrid>
+
+                        </p:fieldset>
+                        
                     </p:panelGrid>
 
-                       
                     <p:panelGrid rendered="#{empty listarPedidosController.pedido}" columns="1" style="display:block; text-align:center">
 
                         <p:outputLabel value="No has seleccionado ningún pedido" />
