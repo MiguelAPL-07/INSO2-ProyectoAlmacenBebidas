@@ -173,14 +173,12 @@
                     <p:panelGrid id="panelRealizar" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Realizar pedido" 
                                          action="#{nuevoPedidoController.realizarPedido()}"
-                                         update=":formPrincipal">
+                                         update="formPrincipal">
                             
                         </p:commandButton>
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
-                        <p:messages id="msg" severity="info, fatal" closable="true" />
-                    </p:panelGrid>
+                    <p:growl id="panelMsg" />
                     
                 </h:form>
                   
