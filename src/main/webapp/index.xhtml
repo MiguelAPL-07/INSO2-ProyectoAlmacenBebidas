@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Almacén bebidas</title>
         <h:outputStylesheet library="css" name="index.css" />
     </h:head>
     <h:body id="principal">
@@ -13,9 +13,9 @@
             
             <h1 style="display:block; text-align:center">Inicio de sesión</h1>
             
-            <p:panel id="usuario" styleClass="ui-noborder">
+            <p:panel id="usuario" styleClass="ui-panel-content">
                 
-                <p:panelGrid columns="1" layout="grid" style="display:block; text-align:center"> 
+                <p:panelGrid columns="1" layout="grid" style="display:block; text-align:center;"> 
                     
                     <p:fieldset legend="Credenciales">
                         
@@ -39,10 +39,14 @@
                     <p:commandButton value="Iniciar sesion" update="loginForm" action="#{indexController.verificarUsuario()}" />
                 </p:panelGrid>
                 
+                <p:panelGrid columns="1" style="display:block; text-align:center">
+                    <p:graphicImage library="img" name="fondo.png" width="700px"/>
+                </p:panelGrid>
+                
             </p:panel>
-            
+
         </h:form>
-            
+    
     </h:body>
 </html>
 
