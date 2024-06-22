@@ -12,7 +12,7 @@
 
             <ui:define name="content">
                 
-                <h:form>
+                <h:form id="formPrincipal">
                     
                     <h1>PRODUCTOS DISPONIBLES EN EL ALMACÉN</h1>
                    
@@ -64,11 +64,15 @@
                             </h:commandLink>
                         </p:column>
                         
-                        <p:column headerText="Eliminiar publicaciones">
-                            <p:commandLink value="Eliminar" actionListener="#{listarProductosController.eliminarProducto(prod)}" />
+                        <p:column headerText="Eliminiar producto">
+                            <p:commandLink value="Eliminar" update="formPrincipal" actionListener="#{listarProductosController.eliminarProducto(prod)}" />
                         </p:column>
 
                     </p:dataTable>
+                    
+                    <p:growl id="panelMsg">
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                    </p:growl>
                    
                 </h:form>
                 

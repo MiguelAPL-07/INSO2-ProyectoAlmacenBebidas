@@ -63,15 +63,15 @@
 
                     </p:panelGrid>
                     
-                    <p:panelGrid id="panelMsg" columns="1" style="display:block; text-align:center">
-                        <p:messages id="msg" severity="info, fatal" closable="true" />
-                    </p:panelGrid>
-                    
                     <p:panelGrid id="panel2" columns="1" style="display:block; text-align:center">
                         <p:commandButton value="Añadir" 
                                          action="#{nuevoProductoController.insertarProducto()}"
-                                         update="panel"/>
+                                         update="form"/>
                     </p:panelGrid>
+                    
+                    <p:growl id="panelMsg">
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                    </p:growl>
                     
                 </h:form>
                 

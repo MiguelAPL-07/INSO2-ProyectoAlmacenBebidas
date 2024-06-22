@@ -58,11 +58,15 @@
                         
                         <p:column headerText="Eliminar usuario">
                              <p:commandLink value="Eliminar" 
-                                            update="tablaUsuarios"
+                                            update="formPrincipal"
                                             actionListener="#{listarUsuariosController.eliminarUsuario(user)}" />
                         </p:column>
 
                     </p:dataTable>
+                    
+                    <p:growl id="panelMsg">
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                    </p:growl>
                     
                 </h:form>
                 

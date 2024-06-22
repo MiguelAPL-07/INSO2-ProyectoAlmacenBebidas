@@ -103,6 +103,13 @@
                                          action="#{editarUsuarioController.editarUsuario()}"
                                          update="panel"/>
                     </p:panelGrid>
+                    
+                    <p:growl id="panelMsg">
+                        
+                        <p:messages id="msg" severity="info, fatal" closable="true" />
+                        
+                    </p:growl>
+                    
                 </h:form>
                 
                 <h:form>
